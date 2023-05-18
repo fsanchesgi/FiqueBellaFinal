@@ -9,8 +9,9 @@ namespace FiqueBellaFinal.Context
         {          
         }
 
-        public DbSet<Cliente> Clientes { get; set; }
+        //public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Agenda> Agendas { get; set; }
         public DbSet<Procedimento> Procedimentos { get; set;}
+        public DbSet<Categoria> Categorias { get; set; }
     }
 }

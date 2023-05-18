@@ -1,0 +1,19 @@
+﻿@model ProcedimentoListViewModel
+
+<div>
+    <h2>@Model.CategoriaAtual</h2>
+</div>
+
+
+
+<br />
+<div class="container">
+        <div class="row">
+            @foreach(var procedimento in Model.Procedimentos)
+            {
+                <partial name="_ProcedimentosResumo" for="@procedimento" />
+                
+            }
+            
+    </div>
+</div>

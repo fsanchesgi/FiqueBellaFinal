@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FiqueBellaFinal.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230517194955_teste")]
-    partial class teste
+    [Migration("20230518113800_primeiraMigracao")]
+    partial class primeiraMigracao
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,68 +32,36 @@ namespace FiqueBellaFinal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AgendaId"), 1L, 1);
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Dia")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Horario")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProcedimentoId")
-                        .HasColumnType("int");
-
                     b.HasKey("AgendaId");
-
-                    b.HasIndex("ClienteId");
-
-                    b.HasIndex("ProcedimentoId");
 
                     b.ToTable("Agendas");
                 });
 
-            modelBuilder.Entity("FiqueBellaFinal.Models.Cliente", b =>
+            modelBuilder.Entity("FiqueBellaFinal.Models.Categoria", b =>
                 {
-                    b.Property<int>("ClienteId")
+                    b.Property<int>("CategoriaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClienteId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoriaId"), 1L, 1);
 
-                    b.Property<string>("Bairro")
+                    b.Property<string>("CategoriaNome")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Cidade")
+                    b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Endereco1")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.HasKey("CategoriaId");
 
-                    b.Property<string>("Endereco2")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("Telefone")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.HasKey("ClienteId");
-
-                    b.ToTable("Clientes");
+                    b.ToTable("Categorias");
                 });
 
             modelBuilder.Entity("FiqueBellaFinal.Models.Procedimento", b =>
@@ -103,6 +71,9 @@ namespace FiqueBellaFinal.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProcedimentoId"), 1L, 1);
+
+                    b.Property<int>("CategoriaId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -141,36 +112,25 @@ namespace FiqueBellaFinal.Migrations
 
                     b.HasKey("ProcedimentoId");
 
+                    b.HasIndex("CategoriaId");
+
                     b.ToTable("Procedimentos");
-                });
-
-            modelBuilder.Entity("FiqueBellaFinal.Models.Agenda", b =>
-                {
-                    b.HasOne("FiqueBellaFinal.Models.Cliente", "Cliente")
-                        .WithMany("Agendas")
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FiqueBellaFinal.Models.Procedimento", "Procedimento")
-                        .WithMany("Agendas")
-                        .HasForeignKey("ProcedimentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("Procedimento");
-                });
-
-            modelBuilder.Entity("FiqueBellaFinal.Models.Cliente", b =>
-                {
-                    b.Navigation("Agendas");
                 });
 
             modelBuilder.Entity("FiqueBellaFinal.Models.Procedimento", b =>
                 {
-                    b.Navigation("Agendas");
+                    b.HasOne("FiqueBellaFinal.Models.Categoria", "Categoria")
+                        .WithMany("Procedimento")
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
+                });
+
+            modelBuilder.Entity("FiqueBellaFinal.Models.Categoria", b =>
+                {
+                    b.Navigation("Procedimento");
                 });
 #pragma warning restore 612, 618
         }

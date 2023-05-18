@@ -35,7 +35,5 @@ namespace FiqueBellaFinal.Models
         [StringLength(25)]
         [DataType(DataType.PhoneNumber)]
         public string Telefone { get; set; }
-
-        public List<Agenda> Agendas { get; set; }
     }
 }

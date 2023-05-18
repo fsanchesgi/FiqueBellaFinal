@@ -29,10 +29,10 @@ namespace FiqueBellaFinal.Models
         [Display(Name = "Quantidade de sessões")]
         public int QntdSessoes { get; set; }
 
-        [Display(Name = "Data do pedido")]
-        [DataType(DataType.Text)]
-        [DisplayFormat(DataFormatString = "{0: hh:mm}", ApplyFormatInEditMode = true)]
-        public DateTime Duracao { get; set; }
+        [StringLength(10, ErrorMessage = "O tamanho máximo é 10 caracteres.")]
+        [Required(ErrorMessage = "Informe a duração do procedimento.")]
+        [Display(Name = "Duração")]
+        public string Duracao { get; set; }
 
         [Display(Name = "Preferido?")]
         public bool IsProcedimentoPreferido { get; set; }
@@ -48,8 +48,9 @@ namespace FiqueBellaFinal.Models
         [StringLength(200, ErrorMessage = "O tamanho máximo é 200 caracteres.")]
         [Display(Name = "Caminho da imagem miniatura")]
         public string ImagemThumbnailUrl { get; set; }
-
-        public List<Agenda> Agendas { get; set; }
+        
+        public int CategoriaId { get; set; }
+        public virtual Categoria Categoria { get; set; }
 
     }
 }

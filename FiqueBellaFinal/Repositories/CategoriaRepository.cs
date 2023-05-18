@@ -4,15 +4,14 @@ using FiqueBellaFinal.Repositories.Interfaces;
 
 namespace FiqueBellaFinal.Repositories
 {
-    public class AgendaRepository : IAgendaRepository
+    public class CategoriaRepository : ICategoriaRepository
     {
         private readonly AppDbContext _context;
 
-        public AgendaRepository(AppDbContext context)
+        public CategoriaRepository(AppDbContext context)
         {
             _context = context;
         }
-
-        public IEnumerable<Agenda> Agendas => _context.Agendas;
+        public IEnumerable<Categoria> Categorias => _context.Categorias;
     }
 }

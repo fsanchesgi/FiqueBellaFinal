@@ -17,10 +17,5 @@ namespace FiqueBellaFinal.Models
         [DisplayFormat(DataFormatString = "{0: hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime Horario { get; set; }
 
-        public int ClienteId { get; set; }
-        public int ProcedimentoId { get; set; }
-
-        public virtual Procedimento Procedimento { get; set; }
-        public virtual Cliente Cliente { get; set; }
     }
 }

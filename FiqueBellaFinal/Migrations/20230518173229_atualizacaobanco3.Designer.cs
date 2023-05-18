@@ -4,6 +4,7 @@ using FiqueBellaFinal.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FiqueBellaFinal.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230518173229_atualizacaobanco3")]
+    partial class atualizacaobanco3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,6 +86,9 @@ namespace FiqueBellaFinal.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<bool>("EmEstoque")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("EmPromocao")
                         .HasColumnType("bit");
 
                     b.Property<string>("ImagemThumbnailUrl")

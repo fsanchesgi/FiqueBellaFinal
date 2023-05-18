@@ -1,4 +1,6 @@
 ﻿using FiqueBellaFinal.Context;
+using FiqueBellaFinal.Repositories;
+using FiqueBellaFinal.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace FiqueBellaFinal;
@@ -17,7 +19,15 @@ public class Startup
         services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DataBase")));
 
+        services.AddTransient<IProcedimentoRepository, ProcedimentoRepository>();
+        services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
         services.AddControllersWithViews();
+
+        services.AddMemoryCache();
+        services.AddSession();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,13 +45,18 @@ public class Startup
         }
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-
+        app.UseSession();
         app.UseRouting();
 
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
         {
+            endpoints.MapControllerRoute(
+               name: "categoriaFiltro",
+               pattern: "Procedimento/{action}/{categoria?}",
+               defaults: new { Controller = "Procedimento", action = "List" });
+
             endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
