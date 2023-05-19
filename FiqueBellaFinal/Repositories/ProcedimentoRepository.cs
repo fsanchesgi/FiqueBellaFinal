@@ -23,5 +23,6 @@ namespace FiqueBellaFinal.Repositories
         {
             return _contexto.Procedimentos.FirstOrDefault(p => p.ProcedimentoId == procedimentoId);
         }
+
     }
 }

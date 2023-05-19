@@ -1,6 +1,8 @@
 ﻿using FiqueBellaFinal.Context;
 using FiqueBellaFinal.Repositories;
 using FiqueBellaFinal.Repositories.Interfaces;
+using FiqueBellaFinal.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FiqueBellaFinal;
@@ -19,8 +21,22 @@ public class Startup
         services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DataBase")));
 
+        services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+
         services.AddTransient<IProcedimentoRepository, ProcedimentoRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+        services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Admin",
+                politica =>
+                {
+                    politica.RequireRole("Admin");
+                });
+        });
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -31,7 +47,7 @@ public class Startup
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ISeedUserRoleInitial seedUserRoleInitial)
     {
         if (env.IsDevelopment())
         {
@@ -48,10 +64,18 @@ public class Startup
         app.UseSession();
         app.UseRouting();
 
+        seedUserRoleInitial.SeedRoles();
+        seedUserRoleInitial.SeedUser();
+
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
         {
+            endpoints.MapControllerRoute(
+            name: "areas",
+            pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
+
             endpoints.MapControllerRoute(
                name: "categoriaFiltro",
                pattern: "Procedimento/{action}/{categoria?}",

@@ -1,0 +1,52 @@
+﻿@model LoginViewModel
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Signin Template for Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+</head>
+
+<body class="text-center col-4">
+    <form asp-controller="Account" asp-action="Login" method="post" class="form-horizontal" role="form">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input type="hidden" asp-for="ReturnUrl" />
+        <br />
+        <br />
+        <br />
+        <br />
+        <img class="mb-4" src="~/images/fiquebella.png" alt="" width="~144" height="144">
+        <h1 class="h3 mb-3 font-weight-normal">Por favor insira suas credenciais</h1>
+        <input asp-for="UserName" class="form-control" placeholder="Informe seu usuário" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+        <label for="inputPassword" class="sr-only"></label>
+        <input asp-for="Password" class="form-control" placeholder="Digite sua senha" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+        @*<div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> 
+            </label>
+        </div>*@
+        <br>
+        <div class="form-group">
+            <div class="col-md-8">
+                <input type="submit" class="btn btn-success" value="Log in" />
+            </div>
+        </div>
+    </form>
+
+
+</body>
+</html>

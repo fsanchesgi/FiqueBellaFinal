@@ -19,7 +19,7 @@ namespace FiqueBellaFinal.Models
 
         [StringLength(100, ErrorMessage = "O tamanho máximo é 100 caracteres.")]
         [Display(Name = "Complemento")]
-        public string Endereco2 { get; set; }
+        public string? Endereco2 { get; set; }
 
         [StringLength(40, ErrorMessage = "O tamanho máximo é 40 caracteres.")]
         [Required(ErrorMessage = "Informe o bairro da cliente.")]

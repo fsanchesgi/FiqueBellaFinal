@@ -4,6 +4,7 @@ using FiqueBellaFinal.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FiqueBellaFinal.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230519150050_adicionarIdentity")]
+    partial class adicionarIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,25 +32,13 @@ namespace FiqueBellaFinal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AgendaId"), 1L, 1);
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Dia")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Horario")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("ProcedimentoId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("Horario")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("AgendaId");
-
-                    b.HasIndex("ClienteId");
-
-                    b.HasIndex("ProcedimentoId");
 
                     b.ToTable("Agendas");
                 });
@@ -98,6 +88,7 @@ namespace FiqueBellaFinal.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Endereco2")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -367,25 +358,6 @@ namespace FiqueBellaFinal.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("FiqueBellaFinal.Models.Agenda", b =>
-                {
-                    b.HasOne("FiqueBellaFinal.Models.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FiqueBellaFinal.Models.Procedimento", "Procedimento")
-                        .WithMany()
-                        .HasForeignKey("ProcedimentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("Procedimento");
                 });
 
             modelBuilder.Entity("FiqueBellaFinal.Models.Procedimento", b =>
