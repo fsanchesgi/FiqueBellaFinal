@@ -62,7 +62,7 @@ namespace FiqueBellaFinal.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AgendaId,Dia,Horario,ProcedimentoId,ClienteId")] Agenda agenda)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(agenda);
                 await _context.SaveChangesAsync();
@@ -103,7 +103,7 @@ namespace FiqueBellaFinal.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {

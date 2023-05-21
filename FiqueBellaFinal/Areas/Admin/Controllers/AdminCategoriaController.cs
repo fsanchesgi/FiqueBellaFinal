@@ -23,9 +23,7 @@ namespace FiqueBellaFinal.Areas.Admin.Controllers
         // GET: Admin/AdminCategoria
         public async Task<IActionResult> Index()
         {
-              return _context.Categorias != null ? 
-                          View(await _context.Categorias.ToListAsync()) :
-                          Problem("Entity set 'AppDbContext.Categorias'  is null.");
+            return View(await _context.Categorias.ToListAsync());
         }
 
         // GET: Admin/AdminCategoria/Details/5
@@ -59,7 +57,7 @@ namespace FiqueBellaFinal.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CategoriaId,CategoriaNome,Descricao")] Categoria categoria)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(categoria);
                 await _context.SaveChangesAsync();
@@ -96,7 +94,7 @@ namespace FiqueBellaFinal.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {

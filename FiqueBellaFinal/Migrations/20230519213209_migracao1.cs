@@ -5,24 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FiqueBellaFinal.Migrations
 {
-    public partial class adicionarIdentity : Migration
+    public partial class migracao1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Agendas",
-                columns: table => new
-                {
-                    AgendaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Dia = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Horario = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Agendas", x => x.AgendaId);
-                });
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -84,7 +70,7 @@ namespace FiqueBellaFinal.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Endereco1 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Endereco2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Endereco2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Bairro = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Cidade = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Telefone = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
@@ -227,6 +213,44 @@ namespace FiqueBellaFinal.Migrations
                         principalColumn: "CategoriaId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Agendas",
+                columns: table => new
+                {
+                    AgendaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Dia = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Horario = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    ProcedimentoId = table.Column<int>(type: "int", nullable: false),
+                    ClienteId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Agendas", x => x.AgendaId);
+                    table.ForeignKey(
+                        name: "FK_Agendas_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "ClienteId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Agendas_Procedimentos_ProcedimentoId",
+                        column: x => x.ProcedimentoId,
+                        principalTable: "Procedimentos",
+                        principalColumn: "ProcedimentoId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Agendas_ClienteId",
+                table: "Agendas",
+                column: "ClienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Agendas_ProcedimentoId",
+                table: "Agendas",
+                column: "ProcedimentoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

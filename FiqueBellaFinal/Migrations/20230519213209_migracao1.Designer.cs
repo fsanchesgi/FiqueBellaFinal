@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FiqueBellaFinal.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230519183843_adicionarIdentity1")]
-    partial class adicionarIdentity1
+    [Migration("20230519213209_migracao1")]
+    partial class migracao1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,7 +100,6 @@ namespace FiqueBellaFinal.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Endereco2")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 

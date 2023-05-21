@@ -43,12 +43,13 @@ namespace FiqueBellaFinal.Models
 
         [StringLength(200, ErrorMessage = "O tamanho máximo é 200 caracteres.")]
         [Display(Name = "Caminho da imagem normal")]
-        public string ImagemUrl { get; set; }
+        public string? ImagemUrl { get; set; }
 
         [StringLength(200, ErrorMessage = "O tamanho máximo é 200 caracteres.")]
         [Display(Name = "Caminho da imagem miniatura")]
-        public string ImagemThumbnailUrl { get; set; }
-        
+        public string? ImagemThumbnailUrl { get; set; }
+
+        [Display(Name = "Categoria")]
         public int CategoriaId { get; set; }
         public virtual Categoria Categoria { get; set; }
 

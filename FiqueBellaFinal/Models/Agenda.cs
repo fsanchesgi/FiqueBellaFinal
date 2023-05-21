@@ -15,11 +15,13 @@ namespace FiqueBellaFinal.Models
         [StringLength(10, ErrorMessage = "O tamanho máximo é 10 caracteres.")]
         [Required(ErrorMessage = "Informe horário do agendamento.")]
         [Display(Name = "Horário")]
-        public String Horario { get; set; }
+        public string Horario { get; set; }
 
+        [Display(Name = "Selecione o procedimento")]
         public int ProcedimentoId { get; set; }
         public virtual Procedimento Procedimento { get; set; }
 
+        [Display(Name = "Selecione o(a) cliente")]
         public int ClienteId { get; set; }
         public virtual Cliente Cliente { get; set; }
     }

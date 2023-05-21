@@ -4,12 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Consulte aqui sua agenda</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar novo agendamento</a>
 </p>
-<table class="table">
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th>
@@ -37,15 +37,17 @@
                 @Html.DisplayFor(modelItem => item.Horario)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Procedimento.Descricao)
+                    @Html.DisplayFor(modelItem => item.Procedimento.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cliente.Bairro)
+                    @Html.DisplayFor(modelItem => item.Cliente.Nome)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.AgendaId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AgendaId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AgendaId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.AgendaId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.AgendaId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.AgendaId">Apagar</a> |
+                <a href="http://maps.google.com/?saddr=Current%20Location&daddr=@item.Cliente.Endereco1" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Como chegar</a> |
+                <a href="https://api.whatsapp.com/send?phone=@item.Cliente.Telefone" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">WhatsApp</a>
             </td>
         </tr>
 }

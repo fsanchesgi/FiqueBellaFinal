@@ -49,7 +49,7 @@ namespace FiqueBellaFinal.Areas.Admin.Controllers
         // GET: Admin/AdminProcedimento/Create
         public IActionResult Create()
         {
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "Nome");
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome");
             return View();
         }
 
@@ -60,13 +60,13 @@ namespace FiqueBellaFinal.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProcedimentoId,Nome,Descricao,Preco,QntdSessoes,Duracao,IsProcedimentoPreferido,EmEstoque,ImagemUrl,ImagemThumbnailUrl,CategoriaId")] Procedimento procedimento)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(procedimento);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "Nome", procedimento.CategoriaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome", procedimento.CategoriaId);
             return View(procedimento);
         }
 
@@ -83,7 +83,7 @@ namespace FiqueBellaFinal.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "Nome", procedimento.CategoriaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome", procedimento.CategoriaId);
             return View(procedimento);
         }
 
@@ -99,7 +99,7 @@ namespace FiqueBellaFinal.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {
@@ -119,7 +119,7 @@ namespace FiqueBellaFinal.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "Nome", procedimento.CategoriaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome", procedimento.CategoriaId);
             return View(procedimento);
         }
 

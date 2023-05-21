@@ -1,10 +1,10 @@
 ﻿@model FiqueBellaFinal.Models.Agenda
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Criar";
 }
 
-<h1>Create</h1>
+<h1>Adicione as informações para criar o agendamento.</h1>
 
 <h4>Agenda</h4>
 <hr />
@@ -12,9 +12,10 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="md-form md-outline input-with-post-icon datepicker">
-                <input placeholder="Selecione a data" asp-for="Dia" type="date" id="example" class="form-control">
-            </div>
+                <label asp-for="Dia" class="control-label"></label>
+                <div class="md-form md-outline input-with-post-icon datepicker">
+                <input placeholder="Selecione a data" asp-for="Dia" type="date"id="example" class="form-control">
+            </div>     
             <div class="form-group">
                 <label asp-for="Horario" class="control-label"></label>
                 <input asp-for="Horario" class="form-control" />
@@ -28,14 +29,15 @@
                 <label asp-for="ClienteId" class="control-label"></label>
                 <select asp-for="ClienteId" class ="form-control" asp-items="ViewBag.ClienteId"></select>
             </div>
+            <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Criar" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Retornar para lista</a>
 </div>
 
