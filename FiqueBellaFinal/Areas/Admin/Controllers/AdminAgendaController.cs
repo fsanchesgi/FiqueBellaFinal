@@ -7,10 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FiqueBellaFinal.Context;
 using FiqueBellaFinal.Models;
+using Microsoft.AspNetCore.Authorization;
+using ReflectionIT.Mvc.Paging;
 
 namespace FiqueBellaFinal.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize("Admin")]
     public class AdminAgendaController : Controller
     {
         private readonly AppDbContext _context;
@@ -23,7 +26,12 @@ namespace FiqueBellaFinal.Areas.Admin.Controllers
         // GET: Admin/AdminAgenda
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Agendas.Include(a => a.Cliente).Include(a => a.Procedimento);
+            var appDbContext = _context.Agendas
+                .Include(a => a.Cliente)
+                .Include(a => a.Procedimento)
+                .OrderByDescending(a => a.Dia)
+                .ThenByDescending(a => a.Horario);
+
             return View(await appDbContext.ToListAsync());
         }
 

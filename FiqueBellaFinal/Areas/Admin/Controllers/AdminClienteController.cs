@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FiqueBellaFinal.Context;
 using FiqueBellaFinal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FiqueBellaFinal.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize("Admin")]
     public class AdminClienteController : Controller
     {
         private readonly AppDbContext _context;

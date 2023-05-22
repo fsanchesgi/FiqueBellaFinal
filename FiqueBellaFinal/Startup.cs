@@ -1,9 +1,11 @@
-﻿using FiqueBellaFinal.Context;
+﻿using FiqueBellaFinal.Areas.Admin.Services;
+using FiqueBellaFinal.Context;
 using FiqueBellaFinal.Repositories;
 using FiqueBellaFinal.Repositories.Interfaces;
 using FiqueBellaFinal.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 
 namespace FiqueBellaFinal;
 public class Startup
@@ -28,6 +30,8 @@ public class Startup
         services.AddTransient<IProcedimentoRepository, ProcedimentoRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+        services.AddScoped<RelatorioServices>();
+        services.AddScoped<GraficoServices>();
 
         services.AddAuthorization(options =>
         {
@@ -41,6 +45,12 @@ public class Startup
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         services.AddControllersWithViews();
+
+        services.AddPaging(options =>
+        {
+            options.ViewName = "Bootstrap4";
+            options.PageParameterName = "pageIndex";
+        });
 
         services.AddMemoryCache();
         services.AddSession();

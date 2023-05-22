@@ -22,6 +22,16 @@
                     <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminCategoria" asp-action="Index">Categorias</a>
                     <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminCliente" asp-action="Index">Clientes</a>
                     <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminAgenda" asp-action="Index">Agenda</a>
+                    <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminRelatorio" asp-action="Index">Relatório</a>
+                    <div class="nav-item dropdown" style="color:black">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Gráficos
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminGrafico" asp-action="Index">Atendimento anual</a>
+                            <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminGrafico" asp-action="Mensal" asp-route-dias="30">Atendimento mensal</a>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
