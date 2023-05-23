@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FiqueBellaFinal.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230519213209_migracao1")]
-    partial class migracao1
+    [Migration("20230523174826_sugestao1")]
+    partial class sugestao1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -143,12 +143,10 @@ namespace FiqueBellaFinal.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ImagemThumbnailUrl")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("ImagemUrl")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -171,6 +169,25 @@ namespace FiqueBellaFinal.Migrations
                     b.HasIndex("CategoriaId");
 
                     b.ToTable("Procedimentos");
+                });
+
+            modelBuilder.Entity("FiqueBellaFinal.Models.Sugestao", b =>
+                {
+                    b.Property<int>("SugestaoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SugestaoId"), 1L, 1);
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Texto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SugestaoId");
+
+                    b.ToTable("Sugestaos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

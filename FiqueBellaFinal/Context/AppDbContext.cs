@@ -15,5 +15,6 @@ namespace FiqueBellaFinal.Context
         public DbSet<Agenda> Agendas { get; set; }
         public DbSet<Procedimento> Procedimentos { get; set;}
         public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Sugestao> Sugestaos { get; set; }
     }
 }

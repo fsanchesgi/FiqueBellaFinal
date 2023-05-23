@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "UploadaFiles";
+}
+<img src="~/images/cloud-arrow-up-fill.svg" width="200" height="150" />
+<hr />
+<div class="row align-items-md-stretch">
+    <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <div class="container">
+            @if (ViewData["Erro"] != null)
+            {
+                <img src="~/images/x-circle-fill (1).svg" width="100" height="100" />
+                <br />
+                <br />
+                <h4>@ViewData["Erro"]</h4>
+            }
+        </div>
+        <div class="container">
+            @if (ViewData["Resultado"] != null)
+            {
+                <h4>@ViewData["Resultado"]</h4>
+                <hr />
+                @if (ViewBag.Arquivos != null)
+                {
+                    @foreach (string arquivo in ViewBag.Arquivos)
+                    {
+                        <li>
+                            @arquivo
+                        </li>
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>
+<br />
+<div class="form-group">
+    <a class="btn btn-outline-info" asp-controller="AdminImagens" asp-action="GetImagens">Exibir Imagens</a>
+</div>

@@ -169,6 +169,25 @@ namespace FiqueBellaFinal.Migrations
                     b.ToTable("Procedimentos");
                 });
 
+            modelBuilder.Entity("FiqueBellaFinal.Models.Sugestao", b =>
+                {
+                    b.Property<int>("SugestaoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SugestaoId"), 1L, 1);
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Texto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SugestaoId");
+
+                    b.ToTable("Sugestaos");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")

@@ -1,0 +1,47 @@
+﻿@model FileManagerModel
+
+<br />
+<br />
+<br />
+<br />
+
+
+@{
+    ViewBag.Title = "Galeria";
+}
+@if (Model.Files != null)
+{
+    <font face="Candara">
+        <h3>Acompanhe nossa galeria de procedimentos e resultados:</h3>
+    </font>
+    <hr />
+    <br />
+    var caminho = Model.PathImagesAtendimento;
+    <div class="row">
+        @foreach (FileInfo file in Model.Files)
+        {
+            <div class="col-md-4">
+                <img src="~/@caminho/@file.Name" width="350" height="350" title="@file.Name" asp-append-version="true">
+                <br />
+                <br />
+            </div>
+        }
+    </div>
+}
+@if (ViewData["Erro"] != null)
+{
+    <div class="text-center">
+        <img src="~/images/x-circle-fill (1).svg" width="50" height="50" />
+        <br />
+        <br />
+        <h4>@ViewData["Erro"]</h4>       
+    </div>
+}
+<div class="clearfix"></div>
+<hr />
+
+
+<div class="form-group">
+    <a class="btn btn-outline-info" asp-controller="Home" asp-action="Index">Retornar</a>
+</div>
+<br />

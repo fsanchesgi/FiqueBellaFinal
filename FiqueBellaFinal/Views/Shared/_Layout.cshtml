@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - FiqueBellaFinal</title>
+    <title>@ViewData["Title"] - FiqueBella Estética a Domicílio</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FiqueBellaFinal.styles.css" asp-append-version="true" />
@@ -11,77 +11,98 @@
 <body>
     <header>
         <nav class="navbar navbar-dark bg-dark fixed-top">
-  <div class="container-fluid">              
-                <a class="navbar-brand" style="text-align:left" asp-area="" asp-controller="Home" asp-action="Index"> 
+            <div class="container-fluid">
+                <a class="navbar-brand" style="text-align:left" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/images/silhueta_mulher_sentada_ved_inv1.png" height="50" width="50">
-                    FiqueBella Estética a Domicílio</a>
-                @*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*@
- 
-                
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" style="background-color:black">
-      <div class="offcanvas-header text-light">
-        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body" style="background-color:black">
-        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item d-sm-inline-flex flex-sm-row">
-                            <a class="nav-link text-grey" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item d-sm-inline-flex flex-sm-row">
-                            <a class="nav-link text-grey" asp-area="" asp-controller="Home" asp-action="QuemSomos">Sobre</a>
-                        </li>
-                            
+                    <font face="Candara">FiqueBella Estética a Domicílio</font>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" style="background-color:black">
+                    <div class="offcanvas-header text-light">
+                        <font face="Candara"><h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5></font>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body" style="background-color:black">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <font face="Candara">
+                            <li class="nav-item d-sm-inline-flex flex-sm-row">
+                                <a class="nav-link text-grey" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            </font>
+                            <font face="Candara">
+                            <li class="nav-item d-sm-inline-flex flex-sm-row">
+                                <a class="nav-link text-grey" asp-area="" asp-controller="Galeria" asp-action="Index">Galeria</a>
+                            </li>
+                            </font>
+                            <font face="Candara">
+                            <li class="nav-item d-sm-inline-flex flex-sm-row">
+                                <a class="nav-link text-grey" asp-area="" asp-controller="Home" asp-action="QuemSomos">Sobre</a>
+                            </li>  
+                            </font>
+                            <font face="Candara">
+                            <li class="nav-item d-sm-inline-flex flex-sm-row">
+                                <a class="nav-link text-grey" asp-area="" asp-controller="Sugestao" asp-action="Index">Sugestões</a>
+                            </li>
+                            </font>
+                            <font face="Candara">
                             @await Component.InvokeAsync("CategoriaProc")
                             @if (User.IsInRole("Admin"))
-                    {
-                        <a class="nav-link text-grey" asp-area="Admin" asp-controller="Admin" asp-action="Index">Administração</a>
-                    }
-                            
-                        </ul>
-
-        <form class="navbar-form navbar-right" asp-controller="Procedimento" asp-action="Search" method="get">
+                            {
+                                <a class="nav-link text-grey" asp-area="Admin" asp-controller="Admin" asp-action="Index">Administração</a>
+                            }
+                            </font>
+                        </ul>                
+                        <form class="navbar-form navbar-right" asp-controller="Procedimento" asp-action="Search" method="get">
+                            <font face="Candara">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Procurar procedimento" name="searchString" value="@ViewData["searchstring"]" />
                             </div>
                             <br />
-                            @await Html.PartialAsync("_LoginPartial")
+                            </font>
                         </form>
-      </div>
-    </div>
-  </div>
-</nav>
+                        @await Html.PartialAsync("_LoginPartial")
+                        
+                    </div>
+                </div>
+            </div>
+        </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">          
+        <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+    <br />
+
+
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - FiqueBella - <a asp-area="" asp-controller="Home" asp-action="QuemSomos">Sobre</a>
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-            <a href="https://wa.me/5516981682877?text=Ola%20Gostaria%20de%20saber%20sobre" style="position:fixed;width:60px;height:60px;bottom:40px;right:40px;background-color:#25d366;color:#FFF;border-radius:50px;text-align:center;font-size:30px;box-shadow: 1px 1px 2px #888;
-            z-index:1000;" target="_blank">
-                <i style="margin-top:16px" class="fa fa-whatsapp"></i>
-            </a>
+        <div class="container" style="color:black">
+            <div class="row">
+                <div class="footer-first-box col-lg-4">
+                    &copy; 2023 - FiqueBella Estética a Domicílio - <a asp-area="" asp-controller="Home" asp-action="QuemSomos">Sobre</a>
+                </div>
+                <div class="footer-first-box col-lg-4">
+                    <h5>Nossas redes sociais</h5>
+                    <h6><i><a href="https://www.facebook.com/FiqueBellaEst/" class="link-offset-2 link-underline link-underline-opacity-0" target="_blank"><img src="~/images/facebook.svg" aria-hidden="true" height="20" width="20"> Facebook</a></i></h6>
+                    <h6><i><a href="https://www.instagram.com/fiquebellaest/" class="link-offset-2 link-underline link-underline-opacity-0" target="_blank"><img src="~/images/instagram.svg" aria-hidden="true" height="20" width="20"> Instagram</a></i></h6>
+                </div>
+                <div class="footer-first-box col-lg-4 text-right">
+                    <i class="text-right">
+                        <h5>Horário de atendimento</h5>
+                        <h6>Segunda a Sexta, das 09:00 às 20:00</h6>
+                        <h6>Sábado, das 09:00 às 13:00</h6>
+                        <i />
+                </div>
+            </div>
         </div>
+        <link rel="stylesheet" href="https://cdn.positus.global/production/resources/robbu/whatsapp-button/whatsapp-button.css">
+        <a id="robbu-whatsapp-button" target="_blank" href="https://api.whatsapp.com/send?phone=5516981682877&text=Ol%C3%A1,%20nos%20contate%20para%20saber%20mais....">
+            <div class="rwb-tooltip">Fale Conosco</div>
+            <img src="https://cdn.positus.global/production/resources/robbu/whatsapp-button/whatsapp-icon.svg">
+        </a>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

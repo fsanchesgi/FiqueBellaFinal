@@ -47,7 +47,7 @@ namespace FiqueBellaFinal.Controllers
             if (string.IsNullOrEmpty(searchString))
             {
                 procedimentos = _procedimentoRepository.Procedimentos.OrderBy(p => p.ProcedimentoId);
-                categoriaAtual = "Todos os pratos";
+                categoriaAtual = "Todos os procedimentos";
             }
             else
             {

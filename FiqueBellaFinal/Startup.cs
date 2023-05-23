@@ -1,5 +1,7 @@
 ﻿using FiqueBellaFinal.Areas.Admin.Services;
 using FiqueBellaFinal.Context;
+using FiqueBellaFinal.Controllers;
+using FiqueBellaFinal.Models;
 using FiqueBellaFinal.Repositories;
 using FiqueBellaFinal.Repositories.Interfaces;
 using FiqueBellaFinal.Services;
@@ -29,9 +31,12 @@ public class Startup
 
         services.AddTransient<IProcedimentoRepository, ProcedimentoRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+        services.AddTransient<ISugestaoRepository, SugestaoRepository>();
         services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
         services.AddScoped<RelatorioServices>();
         services.AddScoped<GraficoServices>();
+        services.AddScoped<GaleriaController>();
+        services.Configure<ConfigurationImagens>(Configuration.GetSection("ConfigurationPastaImagens"));
 
         services.AddAuthorization(options =>
         {

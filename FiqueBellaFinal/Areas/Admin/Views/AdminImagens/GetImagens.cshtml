@@ -1,0 +1,39 @@
+﻿@model FileManagerModel
+@{
+    ViewBag.Title = "Arquivos";
+}
+@if (Model.Files != null)
+{
+    <h3>Imagens:</h3>
+    <hr />
+    var caminho = Model.PathImagesAtendimento;
+    <div class="row">
+        @foreach (FileInfo file in Model.Files)
+        {
+            <div class="col-md-2">
+                <img src="~/@caminho/@file.Name" width="200" height="200" title="@file.Name" asp-append-version="true">
+                <div style="padding:10px;text-align:left">
+                    <a href="@Url.Action("Deletefile","AdminImagens",new { fname=file.Name})">Deletar</a>
+                </div>
+            </div>
+        }
+    </div>
+}
+@if (ViewData["Erro"] != null)
+{
+    <div class="text-center">
+        <img src="~/images/x-circle-fill (1).svg" width="100" height="100" />
+        <br />
+        <br />
+        <h4>@ViewData["Erro"]</h4>
+    </div>
+}
+<div class="clearfix"></div>
+<hr />
+<div>
+    <span>Para ver o nome do arquivo passa o mouse na imagem</span>
+</div>
+<br />
+<div class="form-group">
+    <a class="btn btn-outline-info" asp-controller="AdminImagens" asp-action="Index">Retornar</a>
+</div>

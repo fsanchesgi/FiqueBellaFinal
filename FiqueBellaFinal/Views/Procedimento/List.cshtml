@@ -4,19 +4,19 @@
 <br />
 <br />
 <div>
-    <h2>@Model.CategoriaAtual</h2>
+    <font face="Candara">
+        <h2>@Model.CategoriaAtual</h2>
+    </font>
 </div>
 
 
 <br />
 <br />
-<div class="container">
+<div class="container" style="margin-block">
         <div class="row">
             @foreach(var procedimento in Model.Procedimentos)
             {
-                <partial name="_ProcedimentosResumo" for="@procedimento" />
-                
+                <partial name="_ProcedimentosResumo" for="@procedimento" />               
             }
-            
     </div>
 </div>
