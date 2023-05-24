@@ -10,60 +10,60 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-dark bg-dark fixed-top">
+        <nav class="navbar navbar-dark fixed-top" style="background-color:deeppink">
             <div class="container-fluid">
-                <a class="navbar-brand" style="text-align:left" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/silhueta_mulher_sentada_ved_inv1.png" height="50" width="50">
-                    <font face="Candara">FiqueBella Estética a Domicílio</font>
+                <a class="navbar-brand text-light" style="text-align:left" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/silhueta_mulher_sentada_ved_inv1 (2).png" height="50" width="50">
+                    <font face="Candara"><strong>FiqueBella Estética a Domicílio</strong></font>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation" style="background-color:deeppink">
+                    <span class="navbar-toggler-icon" style="color:black"></span>
                 </button>
-                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" style="background-color:black">
+                <div class="offcanvas offcanvas-end text-bg-light" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" style="background-color:black">
                     <div class="offcanvas-header text-light">
-                        <font face="Candara"><h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5></font>
+                        <font face="Candara"><h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel"><img src="~/images/Product.png" height="25" width="25" />  Menu</h5></font>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
-                    <div class="offcanvas-body" style="background-color:black">
+                    <div class="offcanvas-body" style="background-color:deeppink">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <font face="Candara">
                             <li class="nav-item d-sm-inline-flex flex-sm-row">
-                                <a class="nav-link text-grey" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/house-door-fill (1).svg" height="25" width="25" />  Home</a>
                             </li>
                             </font>
                             <font face="Candara">
                             <li class="nav-item d-sm-inline-flex flex-sm-row">
-                                <a class="nav-link text-grey" asp-area="" asp-controller="Galeria" asp-action="Index">Galeria</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Galeria" asp-action="Index"><img src="~/images/camera-fill.svg" height="25" width="25" />  Galeria</a>
                             </li>
                             </font>
                             <font face="Candara">
                             <li class="nav-item d-sm-inline-flex flex-sm-row">
-                                <a class="nav-link text-grey" asp-area="" asp-controller="Home" asp-action="QuemSomos">Sobre</a>
-                            </li>  
-                            </font>
-                            <font face="Candara">
-                            <li class="nav-item d-sm-inline-flex flex-sm-row">
-                                <a class="nav-link text-grey" asp-area="" asp-controller="Sugestao" asp-action="Index">Sugestões</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="QuemSomos"><img src="~/images/book-fill.svg" height="25" width="25" />  Sobre</a>
                             </li>
                             </font>
                             <font face="Candara">
-                            @await Component.InvokeAsync("CategoriaProc")
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <a class="nav-link text-grey" asp-area="Admin" asp-controller="Admin" asp-action="Index">Administração</a>
-                            }
+                            <li class="nav-item d-sm-inline-flex flex-sm-row">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Sugestao" asp-action="Index"><img src="~/images/chat-left-dots-fill.svg" height="25" width="25" />  Sugestões</a>
+                            </li>
                             </font>
-                        </ul>                
+                            <font face="Candara">
+                                @await Component.InvokeAsync("CategoriaProc")
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a class="nav-link text-light" asp-area="Admin" asp-controller="Admin" asp-action="Index"><img src="~/images/people-fill.svg" height="25" width="25" />  Administração</a>
+                                }
+                            </font>
+                        </ul>
                         <form class="navbar-form navbar-right" asp-controller="Procedimento" asp-action="Search" method="get">
                             <font face="Candara">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Procurar procedimento" name="searchString" value="@ViewData["searchstring"]" />
-                            </div>
-                            <br />
+                                <div class="form-group">
+                                    <input type="text" class="form-control text-light" placeholder="Procurar procedimento" name="searchString" value="@ViewData["searchstring"]" />
+                                </div>
+                                <br />
                             </font>
                         </form>
                         @await Html.PartialAsync("_LoginPartial")
-                        
+
                     </div>
                 </div>
             </div>
@@ -76,20 +76,26 @@
     </div>
     <br />
 
+    <style>
+        body {
+            background-image: url('/images/estetica-de-fundo-de-folha-em-aquarela-azul-temporada-de-inverno.jpg');
+        }
+    </style>
 
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style="background-color:deeppink">
         <div class="container" style="color:black">
             <div class="row">
-                <div class="footer-first-box col-lg-4">
-                    &copy; 2023 - FiqueBella Estética a Domicílio - <a asp-area="" asp-controller="Home" asp-action="QuemSomos">Sobre</a>
+                <div class="footer-first-box col-lg-4 text-light">
+                    &copy; 2023 - FiqueBella Estética a Domicílio -
+                    <a class="text-light" asp-area="" asp-controller="Home" asp-action="QuemSomos">Sobre</a>
                 </div>
-                <div class="footer-first-box col-lg-4">
+                <div class="footer-first-box col-lg-4 text-light">
                     <h5>Nossas redes sociais</h5>
-                    <h6><i><a href="https://www.facebook.com/FiqueBellaEst/" class="link-offset-2 link-underline link-underline-opacity-0" target="_blank"><img src="~/images/facebook.svg" aria-hidden="true" height="20" width="20"> Facebook</a></i></h6>
-                    <h6><i><a href="https://www.instagram.com/fiquebellaest/" class="link-offset-2 link-underline link-underline-opacity-0" target="_blank"><img src="~/images/instagram.svg" aria-hidden="true" height="20" width="20"> Instagram</a></i></h6>
+                    <h6><i><a href="https://www.facebook.com/FiqueBellaEst/" class="link-offset-2 link-underline link-underline-opacity-0 text-light" target="_blank"><img src="~/images/facebook.svg" aria-hidden="true" height="20" width="20"> Facebook</a></i></h6>
+                    <h6><i><a href="https://www.instagram.com/fiquebellaest/" class="link-offset-2 link-underline link-underline-opacity-0 text-light" target="_blank"><img src="~/images/instagram.svg" aria-hidden="true" height="20" width="20"> Instagram</a></i></h6>
                 </div>
-                <div class="footer-first-box col-lg-4 text-right">
+                <div class="footer-first-box col-lg-4 text-right text-light">
                     <i class="text-right">
                         <h5>Horário de atendimento</h5>
                         <h6>Segunda a Sexta, das 09:00 às 20:00</h6>
@@ -98,11 +104,38 @@
                 </div>
             </div>
         </div>
-        <link rel="stylesheet" href="https://cdn.positus.global/production/resources/robbu/whatsapp-button/whatsapp-button.css">
-        <a id="robbu-whatsapp-button" target="_blank" href="https://api.whatsapp.com/send?phone=5516981682877&text=Ol%C3%A1,%20nos%20contate%20para%20saber%20mais....">
-            <div class="rwb-tooltip">Fale Conosco</div>
-            <img src="https://cdn.positus.global/production/resources/robbu/whatsapp-button/whatsapp-icon.svg">
+        @*        <link rel="stylesheet" href="https://cdn.positus.global/production/resources/robbu/whatsapp-button/whatsapp-button.css">
+        <a id="robbu-whatsapp-button" target="_blank" href="https://api.whatsapp.com/send?phone=5516981682877&text=ol%c3%a1,%20nos%20contate%20para%20saber%20mais....">
+        <div class="rwb-tooltip">fale conosco</div>
+        <img src="https://cdn.positus.global/production/resources/robbu/whatsapp-button/whatsapp-icon.svg">
+        </a>*@
+        <!-- START Widget WhastApp hospedagemwordpresspro -->
+        <a href="https://api.whatsapp.com/send?phone=5516981682877&text=Olá!%20Gostaria%20de%20informações%20sobre..."
+           class="bt-whatsApp" target="_blank" style="right:25px; position:fixed;width:60px;height:60px;bottom:40px;z-index:100;">
+            <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMjYxOSA1MDYgMTIwIDEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48c3R5bGU+CiAgICAgIC5jbHMtMSB7CiAgICAgICAgZmlsbDogIzI3ZDA0NTsKICAgICAgfQoKICAgICAgLmNscy0yLCAuY2xzLTUgewogICAgICAgIGZpbGw6IG5vbmU7CiAgICAgIH0KCiAgICAgIC5jbHMtMiB7CiAgICAgICAgc3Ryb2tlOiAjZmZmOwogICAgICAgIHN0cm9rZS13aWR0aDogNXB4OwogICAgICB9CgogICAgICAuY2xzLTMgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KCiAgICAgIC5jbHMtNCB7CiAgICAgICAgc3Ryb2tlOiBub25lOwogICAgICB9CiAgICA8L3N0eWxlPjwvZGVmcz48ZyBkYXRhLW5hbWU9Ikdyb3VwIDM2IiBpZD0iR3JvdXBfMzYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIzMDAgNzMpIj48Y2lyY2xlIGNsYXNzPSJjbHMtMSIgY3g9IjYwIiBjeT0iNjAiIGRhdGEtbmFtZT0iRWxsaXBzZSAxOCIgaWQ9IkVsbGlwc2VfMTgiIHI9IjYwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMTkgNDMzKSIvPjxnIGRhdGEtbmFtZT0iR3JvdXAgMzUiIGlkPSJHcm91cF8zNSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjU0IDM4NikiPjxnIGRhdGEtbmFtZT0iR3JvdXAgMzQiIGlkPSJHcm91cF8zNCI+PGcgY2xhc3M9ImNscy0yIiBkYXRhLW5hbWU9IkVsbGlwc2UgMTkiIGlkPSJFbGxpcHNlXzE5IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NCA3NSkiPjxjaXJjbGUgY2xhc3M9ImNscy00IiBjeD0iMzEuNSIgY3k9IjMxLjUiIHI9IjMxLjUiLz48Y2lyY2xlIGNsYXNzPSJjbHMtNSIgY3g9IjMxLjUiIGN5PSIzMS41IiByPSIyOSIvPjwvZz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0xNDI0LDE5MWwtNC42LDE2LjMsMTYuOS00LjcuOS01LjItMTEsMy41LDIuOS0xMC41WiIgZGF0YS1uYW1lPSJQYXRoIDEyNiIgaWQ9IlBhdGhfMTI2IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTMyNSAtNjgpIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTI2Niw5MGMwLS4xLDMuNS0xMS43LDMuNS0xMS43bDguNCw3LjlaIiBkYXRhLW5hbWU9IlBhdGggMTI3IiBpZD0iUGF0aF8xMjciIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMTY1IDQzKSIvPjwvZz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0xNDM5LjMsMTYwLjZhOS40LDkuNCwwLDAsMC0zLjksNi4xYy0uNSwzLjksMS45LDcuOSwxLjksNy45YTUwLjg3Niw1MC44NzYsMCwwLDAsOC42LDkuOCwzMC4xODEsMzAuMTgxLDAsMCwwLDkuNiw1LjEsMTEuMzc4LDExLjM3OCwwLDAsMCw2LjQuNiw5LjE2Nyw5LjE2NywwLDAsMCw0LjgtMy4yLDkuODUxLDkuODUxLDAsMCwwLC42LTIuMiw1Ljg2OCw1Ljg2OCwwLDAsMCwwLTJjLS4xLS43LTcuMy00LTgtMy44cy0xLjMsMS41LTIuMSwyLjYtMS4xLDEuNi0xLjksMS42LTQuMy0xLjQtNy42LTQuNGExNS44NzUsMTUuODc1LDAsMCwxLTQuMy02cy42LS43LDEuNC0xLjhhNS42NjQsNS42NjQsMCwwLDAsMS4zLTIuNGMwLS41LTIuOC03LjYtMy41LTcuOUExMS44NTIsMTEuODUyLDAsMCwwLDE0MzkuMywxNjAuNloiIGRhdGEtbmFtZT0iUGF0aCAxMjgiIGlkPSJQYXRoXzEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzMjYuMzMyIC02OC40NjcpIi8+PC9nPjwvZz48L3N2Zz4=" alt="" width="60px">
         </a>
+        <span id="alertWapp" style="right:30px; visibility: hidden; position:fixed;	width:17px;	height:17px;bottom:90px;
+        background:red;z-index:101; font-size:11px;color:#fff;text-align:center;border-radius: 50px;
+        font-weight:bold;line-height: normal; "> 1 </span>
+        <div id="msg1" style="right: 90px; visibility: visible; background: #1EBC59; color: #fff; position: fixed;
+        width: 200px; bottom: 52px; text-align: center; font-size: 13px; line-height: 31px; height: 32px;
+        border-radius: 100px; z-index: 100; ">
+            Fale conosco via WhatsApp
+        </div>
+        <script type="text/javascript">
+            function showIt2() {
+                document.getElementById("msg1").style.visibility = "visible";
+            }
+            setTimeout("showIt2()", 5000);
+            function hiddenIt() { document.getElementById("msg1").style.visibility = "hidden"; }
+            setTimeout("hiddenIt()", 15000);
+            function showIt3() { document.getElementById("msg1").style.visibility = "visible"; }
+            setTimeout("showIt3()", 25000);
+            msg1.onclick = function () { document.getElementById('msg1').style.visibility = "hidden"; };
+            function alertW() { document.getElementById("alertWapp").style.visibility = "visible"; } setTimeout("alertW()", 15000);</script>
+        <!-- END Widget WhastApp -->
+
+
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -7,12 +7,12 @@
 <h1>Consulte aqui sua agenda</h1>
 
 <p>
-    <a asp-action="Create">Criar novo agendamento</a>
+    <a asp-action="Create"><img src="~/images/plus-circle-fill.svg" height="20" width="20" /> Criar novo agendamento</a>
 </p>
 
 <h3 class="panel-title">Total de agendamentos = @Model.Count()</h3>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -46,11 +46,11 @@
                     @Html.DisplayFor(modelItem => item.Cliente.Nome)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.AgendaId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.AgendaId">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.AgendaId">Apagar</a> |
-                <a href="http://maps.google.com/?saddr=Current%20Location&daddr=@item.Cliente.Endereco1" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Como chegar</a> |
-                <a href="https://api.whatsapp.com/send?phone=@item.Cliente.Telefone" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">WhatsApp</a>
+                    <a asp-action="Edit" asp-route-id="@item.AgendaId"><img src="~/images/pencil-fill.svg" height="20" width="20" /> Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.AgendaId"><img src="~/images/view-list.svg" height="20" width="20" /> Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.AgendaId"><img src="~/images/trash3-fill.svg" height="20" width="20" /> Apagar</a> |
+                    <a href="http://maps.google.com/?saddr=Current%20Location&daddr=@item.Cliente.Endereco1" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"><img src="~/images/Black maps.png" height="20" width="20" /> Como chegar</a> |
+                    <a href="https://api.whatsapp.com/send?phone=@item.Cliente.Telefone" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"><img src="~/images/whatsapp.svg" height="20" width="20" /> WhatsApp</a>
             </td>
         </tr>
 }

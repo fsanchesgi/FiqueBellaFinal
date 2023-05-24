@@ -7,9 +7,9 @@
 <h1>Consulte aqui os procedimentos</h1>
 
 <p>
-    <a asp-action="Create">Criar novo procedimento</a>
+    <a asp-action="Create"><img src="~/images/plus-circle-fill.svg" height="20" width="20" /> Criar novo procedimento</a>
 </p>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -55,9 +55,9 @@
                 @Html.DisplayFor(modelItem => item.Categoria.CategoriaNome)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ProcedimentoId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.ProcedimentoId">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProcedimentoId">Apagar</a>
+                    <a asp-action="Edit" asp-route-id="@item.ProcedimentoId"><img src="~/images/pencil-fill.svg" height="20" width="20" /> Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProcedimentoId"><img src="~/images/view-list.svg" height="20" width="20" /> Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProcedimentoId"><img src="~/images/trash3-fill.svg" height="20" width="20" /> Apagar</a>
             </td>
         </tr>
 }

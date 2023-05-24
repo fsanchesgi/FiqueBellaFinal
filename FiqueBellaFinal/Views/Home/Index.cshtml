@@ -4,26 +4,33 @@
 <br />
 <br />
 <br />
+<br />
+
+<p align="center">
+    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+    <div class="elfsight-app-8a47751f-8b9b-46b9-8951-db8807ac7031"></div>
+</p>
 
 @*<partial name="_Carousel" />*@
-<div data-mc-src="1f5de9d3-7830-4fdf-9396-542c97aba5cb#instagram"></div>
+@*<div loading="lazy"
+     data-mc-src="a4801276-d43d-4cc7-bd46-c83bf3bbc9fe#instagram"></div>
 
 <script src="https://cdn2.woxo.tech/a.js#646cf021be828c3ffe9c4828"
         async data-usrc>
-</script>
+</script>*@
 
 <br />
 <font face="Candara">
-    <h2 class="text-center">Bem vinda a Fique Bella Estética a Domicílio</h2>
+    <h2 class="text-center">Bem vindo(a) a Fique Bella Estética a Domicílio</h2>
     <h4 class="text-center">Conheça nossos pacotes e promoções e se preferir nos chame no Whatsapp</h4>
 </font>
 <br />
 
 <!-- Button trigger modal -->
 <div class="text-center">
-<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    NOSSAS PROMOÇÕES
-</button>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        NOSSAS PROMOÇÕES
+    </button>
 </div>
 
 <!-- Modal -->
@@ -55,12 +62,12 @@
 <br />
 <br />
 <font face="Candara" class="text-center">
-<h2>Destaques</h2>
-<br />
+    <h2>Destaques</h2>
+    <br />
 </font>
 
 
-<div class="row" style="align-items:start">
+<div class="row text-center" style="align-items:start">
     @foreach (var procedimento in Model.ProcedimentosPreferidos)
     {
         <partial name="_ProcedimentosResumo" for="@procedimento" />

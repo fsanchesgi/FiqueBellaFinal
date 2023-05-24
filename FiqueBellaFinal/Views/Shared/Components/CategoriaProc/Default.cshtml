@@ -1,13 +1,13 @@
-﻿<div class="nav-item dropdown" >
-    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-       <font face="Candara"> Procedimentos</font>
+﻿<div class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:deeppink">
+        <font face="Candara" class="text-light"><img src="~/images/clipboard-check-fill.svg" height="25" width="25" /> Procedimentos</font>
  </a>
-    <ul class="dropdown-menu dropdown-menu-dark">
+    <ul class="dropdown-menu" style="background-color:white">
         @foreach (var categoria in Model)
         {
             <li>
                 <font face="Candara">
-                <a class="dropdown-item" asp-controller="Procedimento" asp-action="List" style="color:grey"
+                <a class="dropdown-item" asp-controller="Procedimento" asp-action="List" style="color:black"
                asp-route-categoria="@categoria.CategoriaNome">@categoria.CategoriaNome</a>
                </font>
             </li>
@@ -16,7 +16,7 @@
         <li>
             <font face="Candara">
             <a class="dropdown-item" asp-controller="Procedimento" asp-action="List" asp-route-categoria=""
-               style="color:grey">Todos os procedimentos</a>     
+               style="color:black">Todos os procedimentos</a>     
                </font>
         </li>
     </ul>

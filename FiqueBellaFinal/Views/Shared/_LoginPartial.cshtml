@@ -8,8 +8,8 @@
         method="post" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <button type="submit" style="width:auto" class="nav-link btn btn-link py-0">
-                <img src="~/images/transparent-login-icon-logout-icon-5dcfef94516950.3632820915739083723335.png" height="30" width="30">
-                <a class="text-grey"> Logout</a>
+                <img src="~/images/door-open-fill.svg" height="30" width="30">
+                <a class="text-dark"> Logout</a>
             </button>
         </ul>
         </form>
@@ -17,6 +17,6 @@
     else
     {
         <ul class="nav navbar-nav navbar-right text-center">
-            <a class="nav-link text-grey" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@string.Format("{0}{1}",Context.Request.Path, Context.Request.QueryString)"k"><img src="~/images/login-icons-png-4-600x600.png" height="30" width="30" color="white"/> Login</a>
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@string.Format("{0}{1}",Context.Request.Path, Context.Request.QueryString)"k"><img src="~/images/person-vcard-fill.svg" height="30" width="30" color="white"/> Login</a>
         </ul>
     }
