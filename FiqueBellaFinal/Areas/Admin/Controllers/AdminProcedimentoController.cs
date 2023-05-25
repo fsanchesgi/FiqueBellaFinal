@@ -60,7 +60,7 @@ namespace FiqueBellaFinal.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProcedimentoId,Nome,Descricao,Preco,QntdSessoes,Duracao,IsProcedimentoPreferido,EmEstoque,ImagemUrl,ImagemThumbnailUrl,CategoriaId")] Procedimento procedimento)
+        public async Task<IActionResult> Create([Bind("ProcedimentoId,Nome,Descricao,Preco,QntdSessoes,Duracao,IsProcedimentoPreferido,EmPromocao,ImagemUrl,ImagemThumbnailUrl,CategoriaId")] Procedimento procedimento)
         {
             if (!ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace FiqueBellaFinal.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProcedimentoId,Nome,Descricao,Preco,QntdSessoes,Duracao,IsProcedimentoPreferido,EmEstoque,ImagemUrl,ImagemThumbnailUrl,CategoriaId")] Procedimento procedimento)
+        public async Task<IActionResult> Edit(int id, [Bind("ProcedimentoId,Nome,Descricao,Preco,QntdSessoes,Duracao,IsProcedimentoPreferido,EmPromocao,ImagemUrl,ImagemThumbnailUrl,CategoriaId")] Procedimento procedimento)
         {
             if (id != procedimento.ProcedimentoId)
             {

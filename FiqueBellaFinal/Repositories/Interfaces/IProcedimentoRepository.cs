@@ -7,6 +7,7 @@ namespace FiqueBellaFinal.Repositories.Interfaces
     {
         IEnumerable<Procedimento> Procedimentos { get; }
         IEnumerable<Procedimento> ProcedimentosPreferidos { get; }
+        IEnumerable<Procedimento> ProcedimentosEmPromocao { get; }
         Procedimento GetProcedimento(int procedimentoId);
     }
 }

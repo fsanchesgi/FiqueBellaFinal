@@ -19,7 +19,8 @@ namespace FiqueBellaFinal.Controllers
         {
             var homeViewModel = new HomeViewModel
             {
-                ProcedimentosPreferidos = _procedimentoRepository.ProcedimentosPreferidos
+                ProcedimentosPreferidos = _procedimentoRepository.ProcedimentosPreferidos,
+                ProcedimentosEmPromocao = _procedimentoRepository.ProcedimentosEmPromocao
             };
             return View(homeViewModel);
         }

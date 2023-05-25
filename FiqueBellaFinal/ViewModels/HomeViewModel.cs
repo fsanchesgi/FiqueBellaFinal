@@ -6,5 +6,6 @@ namespace FiqueBellaFinal.ViewModels
     public class HomeViewModel
     {
         public IEnumerable<Procedimento> ProcedimentosPreferidos { get; set; }
+        public IEnumerable<Procedimento> ProcedimentosEmPromocao { get; set; }
     }
 }

@@ -1,0 +1,13 @@
+﻿@model Procedimento
+
+<div class="col-sm-12 col-sm-12 col-lg-12 text-center" style="align-items: center">
+    <p><img src="@Model.ImagemUrl" class="img-fluid" width="200" height="200" /></p>
+    <font face="Candara">
+        <h2><strong>@Model.Nome</strong></h2>
+        <h5>Quantidade de sessões: @Model.QntdSessoes</h5>
+        <h5>@Model.Descricao</h5>
+        <h5>Duração de cada sessão: @Model.Duracao</h5>
+        <h5>Preço: @Model.Preco.ToString("C")</h5>
+    </font>
+</div>
+<br />

@@ -19,6 +19,10 @@ namespace FiqueBellaFinal.Repositories
                                                       .Where(p => p.IsProcedimentoPreferido)
                                                       .Include(c => c.Categoria);
 
+        public IEnumerable<Procedimento> ProcedimentosEmPromocao => _contexto.Procedimentos
+                                                      .Where(p => p.EmPromocao)
+                                                      .Include(c => c.Categoria);
+
         public Procedimento GetProcedimento(int procedimentoId)
         {
             return _contexto.Procedimentos.FirstOrDefault(p => p.ProcedimentoId == procedimentoId);

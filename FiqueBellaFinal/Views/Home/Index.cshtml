@@ -34,20 +34,29 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">PROMOÇÕES</h1>
+<div class="modal fade text-center" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog text-center">
+        <div class="modal-content text-center">
+            <div class="modal-header text-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    <div class="spinner-grow text-danger text-center" role="status">
+                        <span class="visually-hidden">Loading...</span>                        
+                    </div>
+                    <stong> PROMOÇÕES</stong>
+                </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="card">
-                    <img src="/images/34ddb35d-9f9.jpg" class="card-img-top" alt="...">
+                <div class="card" style="align-content:center">
+                    @*<img src="/images/34ddb35d-9f9.jpg" class="card-img-top" alt="...">*@
 
-                    <div class="card-body">
-                        <h5 class="card-title">Massagem modeladora</h5>
-                        <p class="card-text">Nesse mês fechando um pacote de modeladora com 8 sessões você ganha 2 sessões de drenagem linfática</p>
+                    <div class="card-body text-center" style="align-items:center">
+                        @foreach (var procedimento in Model.ProcedimentosEmPromocao)
+                        {
+                            <partial name="_EmPromocao" for="@procedimento" />
+                        }
+                        @*<h5 class="card-title">Massagem modeladora</h5>
+                        <p class="card-text">Nesse mês fechando um pacote de modeladora com 8 sessões você ganha 2 sessões de drenagem linfática</p>*@
                         <a href="https://wa.me/5516981682877" class="btn btn-primary">Marque já seu horário</a>
                     </div>
                 </div>

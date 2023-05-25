@@ -14,23 +14,23 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar border-bottom box-shadow mb-3" style="background-color: black">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar border-bottom box-shadow mb-3" style="background-color: purple">
             <div class="container">
-                <a class="navbar-brand" asp-area="Admin" asp-controller="Admin" asp-action="Index"><img src="~/images/pngaaa.com-5315331.png" height="40" width="40" /><strong> Admin</strong></a>
+                <a class="navbar-brand text-light" asp-area="Admin" asp-controller="Admin" asp-action="Index"><img src="~/images/pngaaa.com-5315331.png" height="40" width="40" /><strong> Admin</strong></a>
                 <div class="navbar-collapse collapse d-sm-inline-flex">
-                    <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminProcedimento" asp-action="Index"><img src="~/images/3712153 (1).png" height="35" width="35" /> Procedimentos</a>
-                    <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminCategoria" asp-action="Index"><img src="~/images/document_category_icon_149943.png" height="45" width="45" /> Categorias</a>
-                    <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminCliente" asp-action="Index"><img src="~/images/459-4595691_contribution-through-participation-in-cooperative-purchasing-client-icon-removebg-preview.png" height="35" width="35" /> Clientes</a>
-                    <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminAgenda" asp-action="Index"><img src="~/images/275-2753609_calendar-icon-white-png-removebg-preview.png" height="35" width="50" /> Agenda</a>
-                    <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminRelatorio" asp-action="Index"><img src="~/images/431-4315897_increased-performance-progress-report-icon-removebg-preview.png" height="35" width="35" /> Relatório</a>
-                    <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminImagens" asp-action="Index"><img src="~/images/50-505604_gallery-icon-gallery-icon-png-white-removebg-preview.png" height="35" width="40" /> Imagens</a>
-                    <div class="nav-item dropdown" style="color:black">
-                        <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <font color="blue"><img src="~/images/52-527751_pics-for-chart-icon-black-and-white-png.png" height="35" width="35" /> Gráficos</font>
+                    <a class="nav-link text-light" asp-area="Admin" asp-controller="AdminProcedimento" asp-action="Index"><img src="~/images/3712153 (1).png" height="35" width="35" /> Procedimentos</a>
+                    <a class="nav-link text-light" asp-area="Admin" asp-controller="AdminCategoria" asp-action="Index"><img src="~/images/document_category_icon_149943 (1).png" height="45" width="45" /> Categorias</a>
+                    <a class="nav-link text-light" asp-area="Admin" asp-controller="AdminCliente" asp-action="Index"><img src="~/images/459-4595691_contribution-through-participation-in-cooperative-purchasing-client-icon-removebg-preview.png" height="35" width="35" /> Clientes</a>
+                    <a class="nav-link text-light" asp-area="Admin" asp-controller="AdminAgenda" asp-action="Index"><img src="~/images/275-2753609_calendar-icon-white-png-removebg-preview.png" height="35" width="50" /> Agenda</a>
+                    <a class="nav-link text-light" asp-area="Admin" asp-controller="AdminRelatorio" asp-action="Index"><img src="~/images/431-4315897_increased-performance-progress-report-icon-removebg-preview.png" height="35" width="35" /> Relatório</a>
+                    <a class="nav-link text-light" asp-area="Admin" asp-controller="AdminImagens" asp-action="Index"><img src="~/images/50-505604_gallery-icon-gallery-icon-png-white-removebg-preview.png" height="35" width="40" /> Imagens</a>
+                    <div class="nav-item dropdown" style="background-color:purple">
+                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <font color="white"><img src="~/images/52-527751_pics-for-chart-icon-black-and-white-png.png" height="35" width="35" /> Gráficos</font>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminGrafico" asp-action="Index">Atendimento anual</a>
-                            <a class="nav-link text-grey" asp-area="Admin" asp-controller="AdminGrafico" asp-action="Mensal" asp-route-dias="30">Atendimento mensal</a>
+                        <ul class="dropdown-menu" style="background-color:purple">
+                            <a class="nav-link text-light" asp-area="Admin" asp-controller="AdminGrafico" asp-action="Index">Atendimento anual</a>
+                            <a class="nav-link text-light" asp-area="Admin" asp-controller="AdminGrafico" asp-action="Mensal" asp-route-dias="30">Atendimento mensal</a>
                         </ul>
                     </div>
                 </div>
@@ -43,9 +43,16 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <style>
+        body {
+            background-image: url('/images/fundo-cinza-claro3.png');
+            background-size: 2000px;
+        }
+    </style>
+
+    <footer class="border-top footer text-muted fixed-bottom">
         <div class="container">
-            &copy; 2023 - FiqueBella - <a asp-area="" asp-controller="Home" asp-action="QuemSomos">Sobre</a>
+            &copy; 2023 - FiqueBella - <a class="text-dark" asp-area="" asp-controller="Home" asp-action="QuemSomos">Sobre</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

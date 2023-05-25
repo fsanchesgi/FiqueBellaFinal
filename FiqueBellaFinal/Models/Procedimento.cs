@@ -37,8 +37,8 @@ namespace FiqueBellaFinal.Models
         [Display(Name = "Preferido?")]
         public bool IsProcedimentoPreferido { get; set; }
 
-        [Display(Name = "Estoque")]
-        public bool EmEstoque { get; set; }
+        [Display(Name = "Em promoção?")]
+        public bool EmPromocao { get; set; }
 
 
         [StringLength(200, ErrorMessage = "O tamanho máximo é 200 caracteres.")]
