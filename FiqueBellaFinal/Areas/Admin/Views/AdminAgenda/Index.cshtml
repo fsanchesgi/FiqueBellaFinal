@@ -48,8 +48,8 @@
                     <a class="text-dark" asp-action="Edit" asp-route-id="@item.AgendaId"><img src="~/images/pencil-fill.svg" height="20" width="20" /> Editar</a> |
                     <a class="text-dark" asp-action="Details" asp-route-id="@item.AgendaId"><img src="~/images/view-list.svg" height="20" width="20" /> Detalhes</a> |
                     <a class="text-dark" asp-action="Delete" asp-route-id="@item.AgendaId"><img src="~/images/trash3-fill.svg" height="20" width="20" /> Apagar</a> |
-                    <a href="http://maps.google.com/?saddr=Current%20Location&daddr=@item.Cliente.Endereco1" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover text-dark"><img src="~/images/Black maps.png" height="20" width="20" /> Como chegar</a> |
-                    <a href="https://api.whatsapp.com/send?phone=@item.Cliente.Telefone" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover text-dark"><img src="~/images/whatsapp.svg" height="20" width="20" /> WhatsApp</a>
+                    <a href="http://maps.google.com/?saddr=Current%20Location&daddr=@item.Cliente.Endereco1" target="_blank" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover text-dark"><img src="~/images/Black maps.png" height="20" width="20" /> Como chegar</a> |
+                    <a href="https://api.whatsapp.com/send?phone=@item.Cliente.Telefone" target="_blank" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover text-dark"><img src="~/images/whatsapp.svg" height="20" width="20" /> WhatsApp</a>
             </td>
         </tr>
 }
