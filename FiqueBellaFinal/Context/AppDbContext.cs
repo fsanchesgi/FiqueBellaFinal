@@ -16,5 +16,7 @@ namespace FiqueBellaFinal.Context
         public DbSet<Procedimento> Procedimentos { get; set;}
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Sugestao> Sugestaos { get; set; }
+        public DbSet<Contabilidade> Contabilidades { get; set; }
+        public DbSet<Tipo> Tipos { get; set; }
     }
 }

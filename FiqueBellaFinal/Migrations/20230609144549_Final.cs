@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FiqueBellaFinal.Migrations
 {
-    public partial class sugestao : Migration
+    public partial class Final : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -81,17 +81,43 @@ namespace FiqueBellaFinal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EntradaSaida",
+                columns: table => new
+                {
+                    EntradaSaidaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descricao = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EntradaSaida", x => x.EntradaSaidaId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sugestaos",
                 columns: table => new
                 {
                     SugestaoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Texto = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Texto = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sugestaos", x => x.SugestaoId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tipos",
+                columns: table => new
+                {
+                    TipoId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TipoDesc = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tipos", x => x.TipoId);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,7 +238,7 @@ namespace FiqueBellaFinal.Migrations
                     QntdSessoes = table.Column<int>(type: "int", nullable: false),
                     Duracao = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     IsProcedimentoPreferido = table.Column<bool>(type: "bit", nullable: false),
-                    EmEstoque = table.Column<bool>(type: "bit", nullable: false),
+                    EmPromocao = table.Column<bool>(type: "bit", nullable: false),
                     ImagemUrl = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     ImagemThumbnailUrl = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     CategoriaId = table.Column<int>(type: "int", nullable: false)
@@ -225,6 +251,36 @@ namespace FiqueBellaFinal.Migrations
                         column: x => x.CategoriaId,
                         principalTable: "Categorias",
                         principalColumn: "CategoriaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Contabilidades",
+                columns: table => new
+                {
+                    ContabilidadeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descricao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Data = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Valor = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    InOut = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TipoId = table.Column<int>(type: "int", nullable: false),
+                    EntradaSaidaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contabilidades", x => x.ContabilidadeId);
+                    table.ForeignKey(
+                        name: "FK_Contabilidades_EntradaSaida_EntradaSaidaId",
+                        column: x => x.EntradaSaidaId,
+                        principalTable: "EntradaSaida",
+                        principalColumn: "EntradaSaidaId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Contabilidades_Tipos_TipoId",
+                        column: x => x.TipoId,
+                        principalTable: "Tipos",
+                        principalColumn: "TipoId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -306,6 +362,16 @@ namespace FiqueBellaFinal.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Contabilidades_EntradaSaidaId",
+                table: "Contabilidades",
+                column: "EntradaSaidaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contabilidades_TipoId",
+                table: "Contabilidades",
+                column: "TipoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Procedimentos_CategoriaId",
                 table: "Procedimentos",
                 column: "CategoriaId");
@@ -332,6 +398,9 @@ namespace FiqueBellaFinal.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Contabilidades");
+
+            migrationBuilder.DropTable(
                 name: "Sugestaos");
 
             migrationBuilder.DropTable(
@@ -345,6 +414,12 @@ namespace FiqueBellaFinal.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "EntradaSaida");
+
+            migrationBuilder.DropTable(
+                name: "Tipos");
 
             migrationBuilder.DropTable(
                 name: "Categorias");

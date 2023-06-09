@@ -1,0 +1,52 @@
+﻿@model FiqueBellaFinal.Models.Contabilidade
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h1>Edite o registro da contabilidade</h1>
+
+<h4>Contabilidade</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ContabilidadeId" />
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label asp-for="Data" class="control-label"></label>
+            <div class="md-form md-outline input-with-post-icon datepicker">
+                <input placeholder="Selecione a data" asp-for="Data" type="date" id="example" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Valor" class="control-label"></label>
+                <input asp-for="Valor" class="form-control" />
+                <span asp-validation-for="Valor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TipoId" class="control-label"></label>
+                <select asp-for="TipoId" class="form-control" asp-items="ViewBag.TipoId"></select>
+                <span asp-validation-for="TipoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EntradaSaidaId" class="control-label"></label>
+                <select asp-for="EntradaSaidaId" class="form-control" asp-items="ViewBag.EntradaSaidaId"></select>
+                <span asp-validation-for="EntradaSaidaId" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="text-dark" asp-action="Index"><img src="~/images/arrow-return-left.svg" height="20" width="20" /> Retornar para lista</a>
+</div>
+

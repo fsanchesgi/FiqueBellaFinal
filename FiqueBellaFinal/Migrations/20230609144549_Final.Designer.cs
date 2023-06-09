@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FiqueBellaFinal.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230523174146_sugestao")]
-    partial class sugestao
+    [Migration("20230609144549_Final")]
+    partial class Final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -118,6 +118,62 @@ namespace FiqueBellaFinal.Migrations
                     b.ToTable("Clientes");
                 });
 
+            modelBuilder.Entity("FiqueBellaFinal.Models.Contabilidade", b =>
+                {
+                    b.Property<int>("ContabilidadeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContabilidadeId"), 1L, 1);
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("EntradaSaidaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("InOut")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TipoId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.HasKey("ContabilidadeId");
+
+                    b.HasIndex("EntradaSaidaId");
+
+                    b.HasIndex("TipoId");
+
+                    b.ToTable("Contabilidades");
+                });
+
+            modelBuilder.Entity("FiqueBellaFinal.Models.EntradaSaida", b =>
+                {
+                    b.Property<int>("EntradaSaidaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EntradaSaidaId"), 1L, 1);
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("EntradaSaidaId");
+
+                    b.ToTable("EntradaSaida");
+                });
+
             modelBuilder.Entity("FiqueBellaFinal.Models.Procedimento", b =>
                 {
                     b.Property<int>("ProcedimentoId")
@@ -139,7 +195,7 @@ namespace FiqueBellaFinal.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<bool>("EmEstoque")
+                    b.Property<bool>("EmPromocao")
                         .HasColumnType("bit");
 
                     b.Property<string>("ImagemThumbnailUrl")
@@ -180,16 +236,32 @@ namespace FiqueBellaFinal.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SugestaoId"), 1L, 1);
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Texto")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SugestaoId");
 
                     b.ToTable("Sugestaos");
+                });
+
+            modelBuilder.Entity("FiqueBellaFinal.Models.Tipo", b =>
+                {
+                    b.Property<int>("TipoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TipoId"), 1L, 1);
+
+                    b.Property<string>("TipoDesc")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("TipoId");
+
+                    b.ToTable("Tipos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -409,6 +481,25 @@ namespace FiqueBellaFinal.Migrations
                     b.Navigation("Procedimento");
                 });
 
+            modelBuilder.Entity("FiqueBellaFinal.Models.Contabilidade", b =>
+                {
+                    b.HasOne("FiqueBellaFinal.Models.EntradaSaida", "EntradaSaida")
+                        .WithMany("Contabilidade")
+                        .HasForeignKey("EntradaSaidaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FiqueBellaFinal.Models.Tipo", "Tipo")
+                        .WithMany("Contabilidade")
+                        .HasForeignKey("TipoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EntradaSaida");
+
+                    b.Navigation("Tipo");
+                });
+
             modelBuilder.Entity("FiqueBellaFinal.Models.Procedimento", b =>
                 {
                     b.HasOne("FiqueBellaFinal.Models.Categoria", "Categoria")
@@ -474,6 +565,16 @@ namespace FiqueBellaFinal.Migrations
             modelBuilder.Entity("FiqueBellaFinal.Models.Categoria", b =>
                 {
                     b.Navigation("Procedimento");
+                });
+
+            modelBuilder.Entity("FiqueBellaFinal.Models.EntradaSaida", b =>
+                {
+                    b.Navigation("Contabilidade");
+                });
+
+            modelBuilder.Entity("FiqueBellaFinal.Models.Tipo", b =>
+                {
+                    b.Navigation("Contabilidade");
                 });
 #pragma warning restore 612, 618
         }

@@ -31,9 +31,11 @@ public class Startup
 
         services.AddTransient<IProcedimentoRepository, ProcedimentoRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+        services.AddTransient<IContabilidadeRepository, ContabilidadeRepository>();
         services.AddTransient<ISugestaoRepository, SugestaoRepository>();
         services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
         services.AddScoped<RelatorioServices>();
+        services.AddScoped<RelatorioContabilidadeServices>();
         services.AddScoped<GraficoServices>();
         services.AddScoped<GaleriaController>();
         services.Configure<ConfigurationImagens>(Configuration.GetSection("ConfigurationPastaImagens"));

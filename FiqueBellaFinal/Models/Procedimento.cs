@@ -19,7 +19,7 @@ namespace FiqueBellaFinal.Models
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
 
-        [Required(ErrorMessage = "Informe o preço do prato")]
+        [Required(ErrorMessage = "Informe o preço do procedimento")]
         [Display(Name = "Preço")]
         [Column(TypeName = "decimal(10,2)")]
         [Range(1, 999.99, ErrorMessage = "O preço deve estar entre 1 e 999,99")]

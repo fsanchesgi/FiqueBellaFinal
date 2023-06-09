@@ -1,0 +1,48 @@
+﻿@model FiqueBellaFinal.Models.Contabilidade
+
+@{
+    ViewData["Title"] = "Detalhes";
+}
+
+<h1>Detalhes do registro da contabilidade</h1>
+
+<div>
+    <h4>Contabilidade</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Valor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tipo.TipoDesc)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EntradaSaida)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EntradaSaida.Descricao)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="text-dark" asp-action="Edit" asp-route-id="@Model?.ContabilidadeId"><img src="~/images/pencil-fill.svg" height="20" width="20" /> Editar</a> |
+    <a class="text-dark" asp-action="Index"><img src="~/images/arrow-return-left.svg" height="20" width="20" /> Retornar para lista</a>
+</div>
