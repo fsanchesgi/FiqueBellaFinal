@@ -26,8 +26,8 @@ public class Startup
     // ============================
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DataBase"))
+        //services.AddDbContext<AppDbContext>(options =>
+          //  options.UseSqlServer(Configuration.GetConnectionString("DataBase"))
         );
 
         services.AddIdentity<IdentityUser, IdentityRole>()
@@ -105,8 +105,8 @@ public class Startup
 
         app.UseRouting();
 
-        seedUserRoleInitial.SeedRoles();
-        seedUserRoleInitial.SeedUser();
+       // seedUserRoleInitial.SeedRoles();
+        //seedUserRoleInitial.SeedUser();
 
         app.UseAuthentication();
         app.UseAuthorization();
