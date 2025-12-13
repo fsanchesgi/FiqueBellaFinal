@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- MVC e Autorização -->
+    <!-- ASP.NET Core MVC e Autorização -->
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="7.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.9" />
 
