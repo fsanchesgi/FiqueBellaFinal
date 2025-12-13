@@ -7,19 +7,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Pacotes EF Core compatíveis com .NET 7 -->
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.11" />
+    <!-- ASP.NET Core MVC -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.14" />
+
+    <!-- Entity Framework Core para SQL Server -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.14" />
+
+    <!-- Configuração via IOptions<T> -->
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
+
+    <!-- Para autenticação e autorização (se usar [Authorize]) -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.14" />
+
+    <!-- ReflectionIT.Mvc.Paging (opcional) -->
+    <!-- <PackageReference Include="ReflectionIT.Mvc.Paging" Version="3.2.0" /> -->
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Inclui todos os arquivos estáticos e views -->
-    <Content Update="wwwroot\**\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\**\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
