@@ -1,20 +1,26 @@
-# Etapa de build com SDK 7.0
+# Etapa 1: Build
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /app
+
+WORKDIR /src
 
 # Copia csproj e restaura dependências
-COPY FiqueBellaFinal/FiqueBellaFinal.csproj ./FiqueBellaFinal.csproj
+COPY FiqueBellaFinal/FiqueBellaFinal.csproj ./
 RUN dotnet restore FiqueBellaFinal.csproj
 
 # Copia todo o código
-COPY FiqueBellaFinal/. ./FiqueBellaFinal/
-WORKDIR /app/FiqueBellaFinal
+COPY FiqueBellaFinal/. ./FiqueBellaFinal
+WORKDIR /src/FiqueBellaFinal
+
+# Publica em modo Release
 RUN dotnet publish -c Release -o /app/out
 
-# Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+# Etapa 2: Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
 WORKDIR /app
-COPY --from=build /app/out .
+COPY --from=build /app/out ./
 
-EXPOSE 8080
+# Expõe porta padrão
+EXPOSE 80
+
+# Comando de inicialização
 ENTRYPOINT ["dotnet", "FiqueBellaFinal.dll"]
