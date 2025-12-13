@@ -1,14 +1,14 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-
 var builder = WebApplication.CreateBuilder(args);
 
-// MVC
+// Adiciona serviços
 builder.Services.AddControllersWithViews();
+
+// Registra seu repositório
+builder.Services.AddScoped<IProcedimentoRepository, ProcedimentoRepository>();
 
 var app = builder.Build();
 
-// Produção
+// Middleware
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -16,11 +16,12 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // 🔹 ESSENCIAL para CSS/JS/imagens
+app.UseStaticFiles(); // importante para wwwroot
+
 app.UseRouting();
 app.UseAuthorization();
 
-// Rota padrão
+// Configura rotas MVC
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
