@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Inclui todas as views e arquivos estáticos -->
     <Content Update="wwwroot\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -17,13 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Pacotes EF Core 7 -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.11" />
-    
-    <!-- ReflectionIT.Mvc.Paging compatível com .NET 7 -->
     <PackageReference Include="ReflectionIT.Mvc.Paging" Version="4.2.0" />
-
-    <!-- Roslyn -->
     <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.7.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Ver
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.7.0" />
+  </ItemGroup>
+
+</Project>
