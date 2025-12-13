@@ -7,15 +7,15 @@ public class HomeController : Controller
         _procedimentoRepository = procedimentoRepository;
     }
 
-    public IActionResult Index()
+public IActionResult Index()
+{
+    var homeViewModel = new HomeViewModel
     {
-        var homeViewModel = new HomeViewModel
-        {
-            ProcedimentosPreferidos = _procedimentoRepository.ProcedimentosPreferidos,
-            ProcedimentosEmPromocao = _procedimentoRepository.ProcedimentosEmPromocao
-        };
-        return View(homeViewModel);
-    }
+        ProcedimentosPreferidos = _procedimentoRepository?.ProcedimentosPreferidos ?? new List<Procedimento>(),
+        ProcedimentosEmPromocao = _procedimentoRepository?.ProcedimentosEmPromocao ?? new List<Procedimento>()
+    };
+    return View(homeViewModel);
+}
 
     public IActionResult QuemSomos()
     {
