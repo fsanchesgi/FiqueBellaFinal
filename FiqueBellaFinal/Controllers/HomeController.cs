@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using FiqueBellaFinal.Models;
-using FiqueBellaFinal.ViewModels;
-using FiqueBellaFinal.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;                    // Para Controller e IActionResult
+using FiqueBellaFinal.Data;                         // Se usar AppDbContext (se houver)
+using FiqueBellaFinal.Models;                       // Para modelos
+using FiqueBellaFinal.Repositories.Interfaces;     // Para repositórios
+
 
 
 namespace FiqueBellaFinal.Controllers
