@@ -16,6 +16,7 @@ namespace FiqueBellaFinal.Controllers
             _context = context;
         }
 
+        // GET: /api/produtos
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -23,6 +24,7 @@ namespace FiqueBellaFinal.Controllers
             return Ok(produtos);
         }
 
+        // POST: /api/produtos
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Produto produto)
         {
