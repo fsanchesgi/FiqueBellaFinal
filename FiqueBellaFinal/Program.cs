@@ -3,16 +3,16 @@ using FiqueBellaFinal.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configura DbContext (opcional, se usar SQL Server)
+// DbContext (se necessário)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Adiciona MVC
+// MVC
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Porta dinâmica do Railway
+// Porta dinâmica Railway
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 app.Urls.Add($"http://*:{port}");
 
@@ -23,21 +23,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// ❌ Remover HTTPS no Railway
-// app.UseHttpsRedirection();
-
-// Servir arquivos estáticos
-app.UseStaticFiles();
+app.UseHttpsRedirection();
+app.UseStaticFiles(); // ESSENCIAL para servir CSS/JS
 
 app.UseRouting();
+
 app.UseAuthorization();
 
-// Rotas MVC
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// Rotas API
 app.MapControllers();
 
 app.Run();
