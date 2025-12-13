@@ -1,15 +1,17 @@
-﻿using FiqueBellaFinal.Areas.Admin.Services;
+using FiqueBellaFinal.Areas.Admin.Services;
 using FiqueBellaFinal.Context;
 using FiqueBellaFinal.Controllers;
 using FiqueBellaFinal.Models;
 using FiqueBellaFinal.Repositories;
 using FiqueBellaFinal.Repositories.Interfaces;
 using FiqueBellaFinal.Services;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
 
 namespace FiqueBellaFinal;
+
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -19,11 +21,14 @@ public class Startup
 
     public IConfiguration Configuration { get; }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
+    // ============================
+    // SERVICES
+    // ============================
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddDbContext<AppDbContext>(options =>
-        options.UseSqlServer(Configuration.GetConnectionString("DataBase")));
+            options.UseSqlServer(Configuration.GetConnectionString("DataBase"))
+        );
 
         services.AddIdentity<IdentityUser, IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>()
@@ -33,20 +38,23 @@ public class Startup
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddTransient<IContabilidadeRepository, ContabilidadeRepository>();
         services.AddTransient<ISugestaoRepository, SugestaoRepository>();
+
         services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
         services.AddScoped<RelatorioServices>();
         services.AddScoped<RelatorioContabilidadeServices>();
         services.AddScoped<GraficoServices>();
         services.AddScoped<GaleriaController>();
-        services.Configure<ConfigurationImagens>(Configuration.GetSection("ConfigurationPastaImagens"));
+
+        services.Configure<ConfigurationImagens>(
+            Configuration.GetSection("ConfigurationPastaImagens")
+        );
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy("Admin",
-                politica =>
-                {
-                    politica.RequireRole("Admin");
-                });
+            options.AddPolicy("Admin", policy =>
+            {
+                policy.RequireRole("Admin");
+            });
         });
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -63,9 +71,22 @@ public class Startup
         services.AddSession();
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ISeedUserRoleInitial seedUserRoleInitial)
+    // ============================
+    // PIPELINE
+    // ============================
+    public void Configure(
+        IApplicationBuilder app,
+        IWebHostEnvironment env,
+        ISeedUserRoleInitial seedUserRoleInitial)
     {
+        // 🔥 NECESSÁRIO PARA RAILWAY / PROXY
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders =
+                ForwardedHeaders.XForwardedFor |
+                ForwardedHeaders.XForwardedProto
+        });
+
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
@@ -73,12 +94,15 @@ public class Startup
         else
         {
             app.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
         }
-        app.UseHttpsRedirection();
+
+        // ❌ NÃO usar HTTPS interno em cloud
+        // app.UseHttpsRedirection();
+        // app.UseHsts();
+
         app.UseStaticFiles();
         app.UseSession();
+
         app.UseRouting();
 
         seedUserRoleInitial.SeedRoles();
@@ -90,17 +114,24 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllerRoute(
-            name: "areas",
-            pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
+                name: "areas",
+                pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}"
+            );
 
             endpoints.MapControllerRoute(
-               name: "categoriaFiltro",
-               pattern: "Procedimento/{action}/{categoria?}",
-               defaults: new { Controller = "Procedimento", action = "List" });
+                name: "categoriaFiltro",
+                pattern: "Procedimento/{action}/{categoria?}",
+                defaults: new
+                {
+                    Controller = "Procedimento",
+                    action = "List"
+                }
+            );
 
             endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}"
+            );
         });
     }
 }
