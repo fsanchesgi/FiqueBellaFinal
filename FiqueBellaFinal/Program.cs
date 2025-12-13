@@ -3,7 +3,6 @@ using FiqueBellaFinal.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Adiciona o DbContext usando a connection string do appsettings ou da variável de ambiente
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
