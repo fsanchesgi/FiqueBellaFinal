@@ -1,5 +1,9 @@
 {
   "build": {
-    "builder": "DOCKERFILE"
+    "builder": "dotnet",
+    "args": "publish -c Release -o out"
+  },
+  "start": {
+    "command": "dotnet out/FiqueBellaFinal.dll"
   }
 }
