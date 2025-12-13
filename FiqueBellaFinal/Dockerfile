@@ -1,8 +1,8 @@
 # ===== BUILD =====
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /app
 
-# Copia tudo para dentro do container
+# Copia tudo
 COPY . .
 
 # Restaura e publica
@@ -10,7 +10,7 @@ RUN dotnet restore
 RUN dotnet publish -c Release -o /app/out
 
 # ===== RUNTIME =====
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 
 COPY --from=build /app/out .
