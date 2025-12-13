@@ -16,11 +16,9 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build /app/out ./
 
-# Expondo a porta que Railway vai usar
+# Porta do Railway
 EXPOSE 8080
-
-# Configura a variável de porta que Railway usa
 ENV ASPNETCORE_URLS=http://+:8080
 
-# Inicia a aplicação
+# Inicia aplicação
 ENTRYPOINT ["dotnet", "FiqueBellaFinal.dll"]
