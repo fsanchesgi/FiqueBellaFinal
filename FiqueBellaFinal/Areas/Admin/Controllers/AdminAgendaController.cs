@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using FiqueBellaFinal.Data;
 using FiqueBellaFinal.Models;
 using Microsoft.AspNetCore.Authorization;
-using ReflectionIT.Mvc.Paging;
 
 namespace FiqueBellaFinal.Areas.Admin.Controllers
 {
