@@ -1,30 +1,39 @@
-public class HomeController : Controller
+using Microsoft.AspNetCore.Mvc;
+using FiqueBellaFinal.Models;
+using FiqueBellaFinal.Repositories.Interfaces;
+using FiqueBellaFinal.ViewModels;
+using System.Diagnostics;
+
+namespace FiqueBellaFinal.Controllers
 {
-    private readonly IProcedimentoRepository _procedimentoRepository;
-
-    public HomeController(IProcedimentoRepository procedimentoRepository)
+    public class HomeController : Controller
     {
-        _procedimentoRepository = procedimentoRepository;
-    }
+        private readonly IProcedimentoRepository _procedimentoRepository;
 
-public IActionResult Index()
-{
-    var homeViewModel = new HomeViewModel
-    {
-        ProcedimentosPreferidos = _procedimentoRepository?.ProcedimentosPreferidos ?? new List<Procedimento>(),
-        ProcedimentosEmPromocao = _procedimentoRepository?.ProcedimentosEmPromocao ?? new List<Procedimento>()
-    };
-    return View(homeViewModel);
-}
+        public HomeController(IProcedimentoRepository procedimentoRepository)
+        {
+            _procedimentoRepository = procedimentoRepository;
+        }
 
-    public IActionResult QuemSomos()
-    {
-        return View();
-    }
+        public IActionResult Index()
+        {
+            var homeViewModel = new HomeViewModel
+            {
+                ProcedimentosPreferidos = _procedimentoRepository.ProcedimentosPreferidos,
+                ProcedimentosEmPromocao = _procedimentoRepository.ProcedimentosEmPromocao
+            };
+            return View(homeViewModel);
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult QuemSomos()
+        {
+            return View();
+        }
     }
 }
