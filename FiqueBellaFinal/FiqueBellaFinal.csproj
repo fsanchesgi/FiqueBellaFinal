@@ -7,20 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-  <Content Update="Views\**\*">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </Content>
-  <Content Update="wwwroot\**\*">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </Content>
-</ItemGroup>
+    <!-- Inclui todas as views e arquivos estáticos -->
+    <Content Update="wwwroot\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.11" />
-    <PackageReference Include="ReflectionIT.Mvc.Paging" Version="4.2.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.7.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.7.0" />
   </ItemGroup>
 
 </Project>
