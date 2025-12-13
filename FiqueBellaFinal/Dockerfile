@@ -1,22 +1,18 @@
-# ===== BUILD =====
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+# Imagem base .NET 7 SDK
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 
-# Copia tudo
-COPY . .
-
-# Restaura e publica
+# Copia csproj e restaura dependências
+COPY *.csproj ./
 RUN dotnet restore
+
+# Copia tudo e publica
+COPY . ./
 RUN dotnet publish -c Release -o /app/out
 
-# ===== RUNTIME =====
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+# Imagem runtime
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
-
 COPY --from=build /app/out .
-
-# Railway usa a variável PORT
-ENV ASPNETCORE_URLS=http://+:$PORT
 EXPOSE 8080
-
 ENTRYPOINT ["dotnet", "FiqueBellaFinal.dll"]
