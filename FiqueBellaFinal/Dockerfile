@@ -1,24 +1,30 @@
 # Etapa de build
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+
+# Diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copia csproj e restaura dependências
-COPY FiqueBellaFinal/FiqueBellaFinal.csproj ./FiqueBellaFinal.csproj
-RUN dotnet restore FiqueBellaFinal.csproj
+# Copia os arquivos do projeto para o container
+COPY FiqueBellaFinal/*.csproj ./FiqueBellaFinal/
+COPY FiqueBellaFinal/ ./FiqueBellaFinal/
 
-# Copia todo o código e publica
-COPY FiqueBellaFinal/. ./FiqueBellaFinal/
+# Define o diretório de trabalho para o projeto
 WORKDIR /app/FiqueBellaFinal
+
+# Restaura as dependências
+RUN dotnet restore
+
+# Publica a aplicação em Release
 RUN dotnet publish -c Release -o /app/out
 
 # Etapa de runtime
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+
 WORKDIR /app
 COPY --from=build /app/out ./
 
-# Porta do Railway
-EXPOSE 8080
-ENV ASPNETCORE_URLS=http://+:8080
+# Porta que a aplicação irá expor
+EXPOSE 5000
 
-# Inicia aplicação
+# Comando para rodar a aplicação
 ENTRYPOINT ["dotnet", "FiqueBellaFinal.dll"]
