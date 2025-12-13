@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using FiqueBellaFinal.Models;
-using FiqueBellaFinal.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;  // para [Authorize]
+using FiqueBellaFinal.Models;               // se usar modelos
+using FiqueBellaFinal.Repositories.Interfaces; // se usar repositórios
+using Microsoft.Extensions.Options;        // se usar IOptions<>
 
 
 namespace FiqueBellaFinal.Areas.Admin.Controllers
