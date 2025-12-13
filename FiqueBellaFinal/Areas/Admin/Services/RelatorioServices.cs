@@ -1,4 +1,3 @@
-﻿using FiqueBellaFinal.Context;
 using FiqueBellaFinal.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Metrics;
