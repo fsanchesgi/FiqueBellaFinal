@@ -3,7 +3,7 @@ using FiqueBellaFinal.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configura DbContext (opcional, só se usar API com SQL Server)
+// Configura DbContext (opcional, se usar SQL Server)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -23,7 +23,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// ❌ Remover HTTPS no Railway
+// app.UseHttpsRedirection();
+
+// Servir arquivos estáticos
 app.UseStaticFiles();
 
 app.UseRouting();
