@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.VisualBasic;
 using Microsoft.EntityFrameworkCore;
+using FiqueBellaFinal.Data;
 
 namespace FiqueBellaFinal.Areas.Admin.Controllers
 {
