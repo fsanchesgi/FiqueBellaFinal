@@ -5,7 +5,6 @@ using FiqueBellaFinal.Repositories;
 using FiqueBellaFinal.Repositories.Interfaces;
 using FiqueBellaFinal.Services;
 using Microsoft.AspNetCore.HttpOverrides;
-using ReflectionIT.Mvc.Paging;
 
 namespace FiqueBellaFinal
 {
