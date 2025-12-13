@@ -1,38 +1,28 @@
-using Microsoft.EntityFrameworkCore;
-using FiqueBellaFinal.Data;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Configura DbContext (caso use SQL Server)
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // MVC
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Porta dinâmica do Railway
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-app.Urls.Add($"http://*:{port}");
-
-// Middleware
+// Produção
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
-// app.UseHttpsRedirection(); // comente no Railway
-app.UseStaticFiles();
-app.UseStaticFiles();
+app.UseHttpsRedirection();
+app.UseStaticFiles(); // 🔹 ESSENCIAL para CSS/JS/imagens
 app.UseRouting();
 app.UseAuthorization();
 
-// Rotas MVC
+// Rota padrão
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapControllers();
 
 app.Run();
