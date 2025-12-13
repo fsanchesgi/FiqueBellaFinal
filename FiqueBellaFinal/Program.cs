@@ -1,25 +1,28 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using System;
+using Microsoft.EntityFrameworkCore;
+using FiqueBellaFinal.Data;
 
-namespace FiqueBellaFinal
+var builder = WebApplication.CreateBuilder(args);
+
+// Adiciona o DbContext usando a connection string do appsettings ou da variável de ambiente
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
-
-                    webBuilder
-                        .UseStartup<Startup>()
-                        .UseUrls($"http://*:{port}");
-                });
-    }
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
