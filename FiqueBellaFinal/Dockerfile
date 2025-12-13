@@ -1,20 +1,22 @@
 # Etapa de build
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /src
+WORKDIR /app
 
-# Copia o projeto e restaura pacotes NuGet
+# Copiar csproj e restaurar dependências primeiro (cache mais eficiente)
 COPY FiqueBellaFinal/*.csproj ./FiqueBellaFinal/
-RUN dotnet restore "FiqueBellaFinal/FiqueBellaFinal.csproj"
+WORKDIR /app/FiqueBellaFinal
+RUN dotnet restore
 
-# Copia todo o restante do código
-COPY FiqueBellaFinal/. ./FiqueBellaFinal/
-WORKDIR /src/FiqueBellaFinal
+# Copiar todo o código
+COPY FiqueBellaFinal/. ./FiqueBellaFinal
 
-# Publica em Release
-RUN dotnet publish "FiqueBellaFinal.csproj" -c Release -o /app/out
+# Build e publish
+RUN dotnet publish -c Release -o /app/out
 
 # Etapa de runtime
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
 WORKDIR /app
-COPY --from=build /app/out .
+COPY --from=build /app/out ./
+
+EXPOSE 80
 ENTRYPOINT ["dotnet", "FiqueBellaFinal.dll"]
