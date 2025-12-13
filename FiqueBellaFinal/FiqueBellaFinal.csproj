@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- ASP.NET Core MVC / Authorization -->
+    <!-- MVC e Autorização -->
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="7.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.9" />
 
@@ -18,7 +18,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
 
-    <!-- Configuration / Options pattern -->
+    <!-- Configurações/IOptions -->
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
   </ItemGroup>
 
