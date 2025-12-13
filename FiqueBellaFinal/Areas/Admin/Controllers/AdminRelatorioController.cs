@@ -1,5 +1,4 @@
 ﻿using FiqueBellaFinal.Areas.Admin.Services;
-using FiqueBellaFinal.Context;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
