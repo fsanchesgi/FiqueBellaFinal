@@ -1,38 +1,30 @@
-﻿using FiqueBellaFinal.Models;
-using FiqueBellaFinal.Repositories.Interfaces;
-using FiqueBellaFinal.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-
-namespace FiqueBellaFinal.Controllers
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly IProcedimentoRepository _procedimentoRepository;
+
+    public HomeController(IProcedimentoRepository procedimentoRepository)
     {
-        private readonly IProcedimentoRepository _procedimentoRepository;
+        _procedimentoRepository = procedimentoRepository;
+    }
 
-        public HomeController(IProcedimentoRepository procedimentoRepository)
+    public IActionResult Index()
+    {
+        var homeViewModel = new HomeViewModel
         {
-            _procedimentoRepository = procedimentoRepository;
-        }
+            ProcedimentosPreferidos = _procedimentoRepository.ProcedimentosPreferidos,
+            ProcedimentosEmPromocao = _procedimentoRepository.ProcedimentosEmPromocao
+        };
+        return View(homeViewModel);
+    }
 
-        public IActionResult Index()
-        {
-            var homeViewModel = new HomeViewModel
-            {
-                ProcedimentosPreferidos = _procedimentoRepository.ProcedimentosPreferidos,
-                ProcedimentosEmPromocao = _procedimentoRepository.ProcedimentosEmPromocao
-            };
-            return View(homeViewModel);
-        }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    public IActionResult QuemSomos()
+    {
+        return View();
+    }
 
-        public IActionResult QuemSomos()
-        {
-            return View();
-        }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
