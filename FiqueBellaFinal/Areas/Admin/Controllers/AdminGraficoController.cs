@@ -1,6 +1,7 @@
-﻿using FiqueBellaFinal.Areas.Admin.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using FiqueBellaFinal.Models;
+using FiqueBellaFinal.Repositories.Interfaces;
+
 
 namespace FiqueBellaFinal.Areas.Admin.Controllers
 {
