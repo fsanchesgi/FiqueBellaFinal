@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using FiqueBellaFinal.Models;
-using FiqueBellaFinal.Repositories.Interfaces;
 using FiqueBellaFinal.ViewModels;
-using System.Diagnostics;
+using FiqueBellaFinal.Repositories.Interfaces;
+
 
 namespace FiqueBellaFinal.Controllers
 {
