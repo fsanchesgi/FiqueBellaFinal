@@ -1,22 +1,12 @@
-﻿using FiqueBellaFinal.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using FiqueBellaFinal.Models;
 
-namespace FiqueBellaFinal.Context
+namespace FiqueBellaFinal.Data
 {
-    public class AppDbContext : IdentityDbContext<IdentityUser>
+    public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {          
-        }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Agenda> Agendas { get; set; }
-        public DbSet<Procedimento> Procedimentos { get; set;}
-        public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<Sugestao> Sugestaos { get; set; }
-        public DbSet<Contabilidade> Contabilidades { get; set; }
-        public DbSet<Tipo> Tipos { get; set; }
+        public DbSet<Produto> Produtos { get; set; }
     }
 }
