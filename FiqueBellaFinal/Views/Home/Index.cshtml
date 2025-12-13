@@ -4,85 +4,44 @@
     ViewData["Title"] = "Home Page";
 }
 
-<br />
-<br />
-<br />
-<br />
+<div class="text-center mt-4">
+    <h2>Bem-vindo(a) a Fique Bella Estética a Domicílio</h2>
+    <h4>Conheça nossos pacotes e promoções e nos chame no Whatsapp</h4>
+</div>
 
-<p align="center">
-    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-    <div class="elfsight-app-8a47751f-8b9b-46b9-8951-db8807ac7031"></div>
-</p>
-
-@*<partial name="_Carousel" />*@
-@*<div loading="lazy"
-     data-mc-src="a4801276-d43d-4cc7-bd46-c83bf3bbc9fe#instagram"></div>
-
-<script src="https://cdn2.woxo.tech/a.js#646cf021be828c3ffe9c4828"
-        async data-usrc>
-</script>*@
-
-<br />
-<font face="Candara">
-    <h2 class="text-center">Bem vindo(a) a Fique Bella Estética a Domicílio</h2>
-    <h4 class="text-center">Conheça nossos pacotes e promoções e se preferir nos chame no Whatsapp</h4>
-</font>
-<br />
-
-<!-- Button trigger modal -->
-<div class="text-center">
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<div class="text-center mt-4">
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#promocoesModal">
         NOSSAS PROMOÇÕES
     </button>
 </div>
 
-<!-- Modal -->
-<font face="Candara">
-<div class="modal fade text-center" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal de Promoções -->
+<div class="modal fade" id="promocoesModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog text-center">
-        <div class="modal-content text-center">
-            <div class="modal-header text-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                    <div class="spinner-grow text-danger text-center" role="status">
-                        <span class="visually-hidden">Loading...</span>                        
-                    </div>
-                    <stong> PROMOÇÕES</stong>
-                </h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Promoções</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <div class="card" style="align-content:center">
-                    @*<img src="/images/34ddb35d-9f9.jpg" class="card-img-top" alt="...">*@
-
-                    <div class="card-body text-center" style="align-items:center">
-                        @foreach (var procedimento in Model.ProcedimentosEmPromocao)
-                        {
-                            <partial name="_EmPromocao" for="@procedimento" />
-                        }
-                        @*<h5 class="card-title">Massagem modeladora</h5>
-                        <p class="card-text">Nesse mês fechando um pacote de modeladora com 8 sessões você ganha 2 sessões de drenagem linfática</p>*@
-                        <a href="https://wa.me/5516981682877" target="_blank" class="btn btn-primary">Marque já seu horário</a>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                @foreach (var p in Model.ProcedimentosEmPromocao)
+                {
+                    <partial name="_EmPromocao" for="@p" />
+                }
+                <a href="https://wa.me/5516981682877" target="_blank" class="btn btn-primary mt-3">
+                    Marque já seu horário
+                </a>
             </div>
         </div>
     </div>
 </div>
-</font>
 
-<br />
-<br />
-<font face="Candara" class="text-center">
-    <h2>Destaques</h2>
-    <br />
-</font>
-
-<div class="row text-center" style="align-items:start">
-    @foreach (var procedimento in Model.ProcedimentosPreferidos)
-    {
-        <partial name="_ProcedimentosResumo" for="@procedimento" />
-    }
+<div class="mt-5">
+    <h2 class="text-center">Destaques</h2>
+    <div class="row text-center mt-3">
+        @foreach (var p in Model.ProcedimentosPreferidos)
+        {
+            <partial name="_ProcedimentosResumo" for="@p" />
+        }
+    </div>
 </div>
