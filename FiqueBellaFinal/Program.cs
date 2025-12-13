@@ -3,30 +3,35 @@ using FiqueBellaFinal.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configura DbContext
+// Configura DbContext (caso use SQL Server)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Adiciona MVC
+// MVC
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Serve arquivos estáticos
-app.UseStaticFiles();
-
-// Configura rotas
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"
-);
-
+// Porta dinâmica do Railway
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 app.Urls.Add($"http://*:{port}");
 
-// Executa
+// Middleware
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+
+// Rotas MVC
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllers();
+
 app.Run();
