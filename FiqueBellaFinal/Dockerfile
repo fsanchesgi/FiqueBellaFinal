@@ -1,26 +1,26 @@
-# Etapa 1: Build
+# Etapa de build
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-
-WORKDIR /src
+WORKDIR /app
 
 # Copia csproj e restaura dependências
-COPY FiqueBellaFinal/FiqueBellaFinal.csproj ./
+COPY FiqueBellaFinal/FiqueBellaFinal.csproj ./FiqueBellaFinal.csproj
 RUN dotnet restore FiqueBellaFinal.csproj
 
-# Copia todo o código
-COPY FiqueBellaFinal/. ./FiqueBellaFinal
-WORKDIR /src/FiqueBellaFinal
-
-# Publica em modo Release
+# Copia todo o código e publica
+COPY FiqueBellaFinal/. ./FiqueBellaFinal/
+WORKDIR /app/FiqueBellaFinal
 RUN dotnet publish -c Release -o /app/out
 
-# Etapa 2: Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+# Etapa de runtime
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build /app/out ./
 
-# Expõe porta padrão
-EXPOSE 80
+# Expondo a porta que Railway vai usar
+EXPOSE 8080
 
-# Comando de inicialização
+# Configura a variável de porta que Railway usa
+ENV ASPNETCORE_URLS=http://+:8080
+
+# Inicia a aplicação
 ENTRYPOINT ["dotnet", "FiqueBellaFinal.dll"]
