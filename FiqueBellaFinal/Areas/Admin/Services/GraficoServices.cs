@@ -1,5 +1,6 @@
 using FiqueBellaFinal.Models;
 using FiqueBellaFinal.Data;
+using FiqueBellaFinal.Services;
 
 namespace FiqueBellaFinal.Areas.Admin.Services
 {
