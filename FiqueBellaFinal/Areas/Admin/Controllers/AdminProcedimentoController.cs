@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;       // para [Authorize]
-using FiqueBellaFinal.Data;                       // AppDbContext
-using FiqueBellaFinal.Models;                     // se usar modelos
-using FiqueBellaFinal.ViewModels;                // se usar viewmodels
-using FiqueBellaFinal.Repositories.Interfaces;   // se usar repositórios
-using Microsoft.Extensions.Options;              // se usar IOptions<>
+using Microsoft.AspNetCore.Mvc;                  // Para Controller, IActionResult, etc.
+using Microsoft.AspNetCore.Authorization;        // Para [Authorize]
+using FiqueBellaFinal.Data;                       // Para AppDbContext
+using FiqueBellaFinal.Services;                   // Para RelatorioServices, GraficoServices, etc.
+using Microsoft.Extensions.Options;              // Para IOptions<>
+using FiqueBellaFinal.Models;                     // Para modelos se usados
+using FiqueBellaFinal.Repositories.Interfaces;   // Para repositórios se usados
 
 
 
