@@ -1,5 +1,4 @@
-﻿using FiqueBellaFinal.Context;
-using FiqueBellaFinal.Models;
+﻿using FiqueBellaFinal.Models;
 using FiqueBellaFinal.Repositories.Interfaces;
 
 namespace FiqueBellaFinal.Repositories
