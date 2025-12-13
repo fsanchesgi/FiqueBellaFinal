@@ -1,4 +1,5 @@
 using FiqueBellaFinal.Models;
+using FiqueBellaFinal.Data;
 using FiqueBellaFinal.Repositories.Interfaces;
 using static FiqueBellaFinal.Repositories.ContabilidadeRepository;
 using static FiqueBellaFinal.Repositories.SugestaoRepository;
