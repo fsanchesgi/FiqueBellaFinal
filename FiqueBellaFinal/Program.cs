@@ -3,14 +3,18 @@ using FiqueBellaFinal.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configura DbContext
+// Configura o DbContext com SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Adiciona suporte a Controllers com Views
+// Adiciona suporte a Controllers + Views (MVC)
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+// Configura a porta dinâmica do Railway
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+app.Urls.Add($"http://*:{port}");
 
 // Middleware
 if (!app.Environment.IsDevelopment())
@@ -30,6 +34,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapControllers(); // API Controllers
+// Rotas API Controllers
+app.MapControllers();
 
 app.Run();
