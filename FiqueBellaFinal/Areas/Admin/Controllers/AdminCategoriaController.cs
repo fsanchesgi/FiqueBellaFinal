@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using FiqueBellaFinal.Data;
-using FiqueBellaFinal.Models;
+using Microsoft.AspNetCore.Mvc;                    // Para Controller e IActionResult
+using Microsoft.AspNetCore.Authorization;          // Para [Authorize]
+using FiqueBellaFinal.Data;                         // Para AppDbContext
+using FiqueBellaFinal.Services;                     // Para serviços (GraficoServices, RelatorioServices, etc.)
+using Microsoft.Extensions.Options;                // Para IOptions<> (ex.: configuração de imagens)
 
 
 
