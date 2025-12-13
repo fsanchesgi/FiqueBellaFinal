@@ -1,6 +1,7 @@
 using FiqueBellaFinal.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Metrics;
+using FiqueBellaFinal.Data;
 
 namespace FiqueBellaFinal.Areas.Admin.Services
 {
