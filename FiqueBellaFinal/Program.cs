@@ -1,9 +1,12 @@
+using FiqueBellaFinal.Repositories;
+using FiqueBellaFinal.Repositories.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Adiciona serviços
+// Adiciona serviços MVC
 builder.Services.AddControllersWithViews();
 
-// Registra seu repositório
+// Registra repositório
 builder.Services.AddScoped<IProcedimentoRepository, ProcedimentoRepository>();
 
 var app = builder.Build();
@@ -16,12 +19,12 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // importante para wwwroot
+app.UseStaticFiles(); // serve wwwroot
 
 app.UseRouting();
 app.UseAuthorization();
 
-// Configura rotas MVC
+// Rotas padrão MVC
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
