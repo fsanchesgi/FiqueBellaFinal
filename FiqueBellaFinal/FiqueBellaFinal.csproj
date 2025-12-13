@@ -6,8 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <!-- Inclui arquivos estáticos e Views no output -->
   <ItemGroup>
-    <!-- Inclui todas as views e arquivos estáticos -->
     <Content Update="wwwroot\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -16,12 +16,12 @@
     </Content>
   </ItemGroup>
 
+  <!-- Pacotes NuGet -->
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.11">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.11" />
+    <PackageReference Include="ReflectionIT.Mvc.Paging" Version="3.0.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.7.0" />
   </ItemGroup>
 
 </Project>
