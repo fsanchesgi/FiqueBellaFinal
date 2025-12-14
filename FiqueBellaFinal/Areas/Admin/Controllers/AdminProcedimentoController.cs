@@ -5,6 +5,7 @@ using FiqueBellaFinal.Models;                    // Se usar Models
 using FiqueBellaFinal.Areas.Admin.Services;
 using Microsoft.Extensions.Options;             // IOptions<>
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FiqueBellaFinal.Areas.Admin.Controllers
 {
