@@ -17,8 +17,7 @@ builder.WebHost.UseUrls($"http://*:{port}");
 
 // 🔹 Conexão com PostgreSQL
 // Usamos DATABASE_URL se disponível, mas sem parsing de URI
-string connectionString = Environment.GetEnvironmentVariable("DATABASE_URL_FALLBACK") 
-    ?? "Host=postgres.railway.internal;Port=5432;Database=railway;Username=postgres;Password=FiqueBella2025;SSL Mode=Prefer;Trust Server Certificate=true;";
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
