@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using FiqueBellaFinal.Models;
 
-namespace FiqueBellaFinal.Context
+namespace FiqueBellaFinal.Data
 {
     public class AppDbContext : DbContext
     {
