@@ -10,7 +10,7 @@ using System.Diagnostics; // Se usar Activity
 
 
 
-public class Startup
+ppublic class Startup
 {
     public IConfiguration Configuration { get; }
 
@@ -22,7 +22,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         // DbContext
-        services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
         // Serviços
