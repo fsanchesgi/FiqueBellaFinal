@@ -1,89 +1,32 @@
-using FiqueBellaFinal.Data;
 using FiqueBellaFinal.Models;
+using FiqueBellaFinal.Data;
 using FiqueBellaFinal.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace FiqueBellaFinal.Repositories
 {
     public class ProcedimentoRepository : IProcedimentoRepository
     {
-        private readonly AppDbContext _context;
-
-        public ProcedimentoRepository(AppDbContext context)
+        private readonly AppDbContext _contexto;
+        public ProcedimentoRepository(AppDbContext contexto)
         {
-            _context = context;
+            _contexto = contexto;
         }
+        public IEnumerable<Procedimento> Procedimentos => _contexto.Procedimentos.Include(c => c.Categoria);
 
-        public IEnumerable<Procedimento> Procedimentos
-        {
-            get
-            {
-                try
-                {
-                    return _context.Procedimentos
-                        .AsNoTracking()
-                        .ToList();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Erro ao buscar Procedimentos: " + ex.Message);
-                    return Enumerable.Empty<Procedimento>();
-                }
-            }
-        }
+        public IEnumerable<Procedimento> ProcedimentosPreferidos => _contexto.Procedimentos
+                                                      .Where(p => p.IsProcedimentoPreferido)
+                                                      .Include(c => c.Categoria);
 
-        public IEnumerable<Procedimento> ProcedimentosPreferidos
-        {
-            get
-            {
-                try
-                {
-                    return _context.Procedimentos
-                        .Where(p => p.Preferido)
-                        .AsNoTracking()
-                        .ToList();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Erro ao buscar ProcedimentosPreferidos: " + ex.Message);
-                    return Enumerable.Empty<Procedimento>();
-                }
-            }
-        }
+        public IEnumerable<Procedimento> ProcedimentosEmPromocao => _contexto.Procedimentos
+                                                      .Where(p => p.EmPromocao)
+                                                      .Include(c => c.Categoria);
 
-        public IEnumerable<Procedimento> ProcedimentosEmPromocao
-        {
-            get
-            {
-                try
-                {
-                    return _context.Procedimentos
-                        .Where(p => p.EmPromocao)
-                        .AsNoTracking()
-                        .ToList();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Erro ao buscar ProcedimentosEmPromocao: " + ex.Message);
-                    return Enumerable.Empty<Procedimento>();
-                }
-            }
-        }
-
-        // 🔴 NOME EXATAMENTE IGUAL AO DA INTERFACE
         public Procedimento GetProcedimento(int procedimentoId)
         {
-            try
-            {
-                return _context.Procedimentos
-                    .AsNoTracking()
-                    .FirstOrDefault(p => p.ProcedimentoId == procedimentoId);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Erro ao buscar Procedimento: " + ex.Message);
-                return null;
-            }
+            return _contexto.Procedimentos.FirstOrDefault(p => p.ProcedimentoId == procedimentoId);
         }
+
     }
 }
