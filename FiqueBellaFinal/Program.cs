@@ -45,7 +45,7 @@ Console.WriteLine("Builder finalizado. Iniciando teste de conexão com o banco..
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
+    db.Database.Migrate(); // aplica migrations se o banco estiver pronto
     try
     {
         Console.WriteLine("Tentando conectar ao banco...");
