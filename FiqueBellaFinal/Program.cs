@@ -12,7 +12,7 @@ using System.Diagnostics; // Se usar Activity
 var builder = WebApplication.CreateBuilder(args);
 
 // Adiciona o DbContext
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Adiciona serviços customizados
@@ -26,7 +26,7 @@ builder.Services.AddControllersWithViews()
 // Adiciona ReflectionIT.Mvc.Paging atualizado
 builder.Services.AddPaging(options =>
 {
-    options.ViewName = "Bootstrap5"; // novo padrão de uso
+    options.ViewName = "Bootstrap5";
 });
 
 var app = builder.Build();
@@ -42,7 +42,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
