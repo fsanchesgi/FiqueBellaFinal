@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ReflectionIT.Mvc.Paging;
 using System.Diagnostics; // Se usar Activity
+using FiqueBellaFinal.Context;
 
 
 
