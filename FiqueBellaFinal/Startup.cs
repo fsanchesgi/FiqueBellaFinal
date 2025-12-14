@@ -10,86 +10,59 @@ using System.Diagnostics; // Se usar Activity
 
 
 
-namespace FiqueBellaFinal
+public class Startup
 {
-    public class Startup
+    public IConfiguration Configuration { get; }
+
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
+        Configuration = configuration;
+    }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        // DbContext
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        // Serviços
+        services.AddScoped<RelatorioServices>();
+        services.AddScoped<GraficoServices>();
+
+        // Controllers com views
+        services.AddControllersWithViews()
+            .AddRazorRuntimeCompilation();
+
+        // Paging atualizado
+        services.AddPaging(options =>
         {
-            Configuration = configuration;
+            options.ViewName = "Bootstrap5";
+        });
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (!env.IsDevelopment())
+        {
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
         }
 
-        public IConfiguration Configuration { get; }
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
 
-        // ============================
-        // SERVICES
-        // ============================
-        public void ConfigureServices(IServiceCollection services)
+        app.UseEndpoints(endpoints =>
         {
-            // 🔴 BANCO + IDENTITY DESATIVADOS TEMPORARIAMENTE
+            endpoints.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-            services.AddTransient<IProcedimentoRepository, ProcedimentoRepository>();
-            services.AddTransient<ICategoriaRepository, CategoriaRepository>();
-            services.AddTransient<IContabilidadeRepository, ContabilidadeRepository>();
-            services.AddTransient<ISugestaoRepository, SugestaoRepository>();
-
-            services.AddScoped<RelatorioServices>();
-            services.AddScoped<RelatorioContabilidadeServices>();
-            services.AddScoped<GraficoServices>();
-            services.AddScoped<GaleriaController>();
-
-            services.Configure<ConfigurationImagens>(
-                Configuration.GetSection("ConfigurationPastaImagens")
-            );
-
-            services.AddControllersWithViews();
-
-            services.AddPaging(options =>
-            {
-                options.ViewName = "Bootstrap4";
-                options.PageParameterName = "pageIndex";
-            });
-
-            services.AddMemoryCache();
-            services.AddSession();
-        }
-
-        // ============================
-        // PIPELINE
-        // ============================
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders =
-                    ForwardedHeaders.XForwardedFor |
-                    ForwardedHeaders.XForwardedProto
-            });
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-
-            // ❌ SEM HTTPS INTERNO
-            // app.UseHttpsRedirection();
-
-            app.UseStaticFiles();
-            app.UseSession();
-
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}"
-                );
-            });
-        }
+            endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+        });
     }
 }
