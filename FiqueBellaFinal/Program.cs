@@ -18,25 +18,42 @@ builder.WebHost.UseUrls($"http://*:{port}");
 // 🔹 Configurando DbContext PostgreSQL com DATABASE_URL do Railway
 string connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-// Se a connection string vier no formato URL do Railway, converte para Key=Value
+// Se a connection string vier no formato URL do Railway, converte manualmente
 if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgresql://"))
 {
-    var uri = new Uri(connectionString);
-    var userInfo = uri.UserInfo.Split(':');
+    // Remove prefixo
+    var cleanUrl = connectionString.Replace("postgresql://", "");
 
-    var builderNpgsql = new NpgsqlConnectionStringBuilder
+    // Divide user:pass e host:port/db
+    var atIndex = cleanUrl.IndexOf('@');
+    var userPass = cleanUrl.Substring(0, atIndex);
+    var hostDb = cleanUrl.Substring(atIndex + 1);
+
+    var colonIndex = userPass.IndexOf(':');
+    var username = userPass.Substring(0, colonIndex);
+    var password = userPass.Substring(colonIndex + 1);
+
+    var slashIndex = hostDb.IndexOf('/');
+    var hostPort = hostDb.Substring(0, slashIndex);
+    var database = hostDb.Substring(slashIndex + 1);
+
+    var colonHost = hostPort.IndexOf(':');
+    var host = hostPort.Substring(0, colonHost);
+    var portDb = int.Parse(hostPort.Substring(colonHost + 1));
+
+    var npgsqlBuilder = new NpgsqlConnectionStringBuilder
     {
-        Host = uri.Host,
-        Port = uri.Port,
-        Username = userInfo[0],
-        Password = userInfo[1],
-        Database = uri.AbsolutePath.TrimStart('/'),
+        Host = host,
+        Port = portDb,
+        Username = username,
+        Password = password,
+        Database = database,
         SslMode = SslMode.Prefer,
         TrustServerCertificate = true,
         Timeout = 120
     };
 
-    connectionString = builderNpgsql.ConnectionString;
+    connectionString = npgsqlBuilder.ConnectionString;
 }
 
 // Fallback caso DATABASE_URL não esteja definida
