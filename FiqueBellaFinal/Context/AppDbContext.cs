@@ -10,6 +10,9 @@ namespace FiqueBellaFinal.Data
         {
         }
 
+        // =========================
+        // Tabelas reais
+        // =========================
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
@@ -18,36 +21,59 @@ namespace FiqueBellaFinal.Data
         public DbSet<Agenda> Agendas { get; set; }
         public DbSet<Contabilidade> Contabilidades { get; set; }
         public DbSet<Tipo> Tipos { get; set; }
-
-        public DbSet<ProcedimentoGrafico> ProcedimentoGraficos { get; set; }
         public DbSet<EntradaSaida> EntradasSaidas { get; set; }
 
+        // =========================
+        // Queries / Views (SEM TABELA)
+        // =========================
+        public DbSet<ProcedimentoGrafico> ProcedimentoGraficos { get; set; }
+
+        // =========================
+        // Models auxiliares (NÃO são tabelas)
+        // =========================
         public DbSet<FileManagerModel> FileManagerModels { get; set; }
         public DbSet<ConfigurationImagens> ConfigurationImagens { get; set; }
 
+        // =========================
+        // Configuração EF Core
+        // =========================
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<FileManagerModel>(entity =>
-            {
-                entity.HasNoKey();
-                entity.ToView(null);
+            // -------------------------
+            // FileManagerModel (NÃO tabela)
+            // -------------------------
+            modelBuilder.Entity<FileManagerModel>()
+                .HasNoKey()
+                .ToView(null);
 
-                entity.Ignore(x => x.IFormFile);
-                entity.Ignore(x => x.IFormFiles);
-                entity.Ignore(x => x.Files);
-            });
+            modelBuilder.Entity<FileManagerModel>()
+                .Ignore(x => x.IFormFile)
+                .Ignore(x => x.IFormFiles)
+                .Ignore(x => x.Files);
 
-            modelBuilder.Entity<ConfigurationImagens>(entity =>
-            {
-                entity.HasNoKey();
-                entity.ToView(null);
-            });
+            // -------------------------
+            // ConfigurationImagens (NÃO tabela)
+            // -------------------------
+            modelBuilder.Entity<ConfigurationImagens>()
+                .HasNoKey()
+                .ToView(null);
 
-            modelBuilder.Entity<ProcedimentoGrafico>(entity =>
-            {
-                entity.HasNoKey();
-                entity.ToView(null);
-            });
+            // -------------------------
+            // ProcedimentoGrafico (Query / View)
+            // -------------------------
+            modelBuilder.Entity<ProcedimentoGrafico>()
+                .HasNoKey();
+
+            modelBuilder.Entity<ProcedimentoGrafico>()
+                .Property(p => p.ProcedimentoValorTotal)
+                .HasPrecision(18, 2);
+
+            // -------------------------
+            // Precisão para valores monetários
+            // -------------------------
+            modelBuilder.Entity<Produto>()
+                .Property(p => p.Preco)
+                .HasPrecision(18, 2);
 
             base.OnModelCreating(modelBuilder);
         }
