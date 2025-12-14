@@ -4,58 +4,52 @@ using FiqueBellaFinal.Repositories;
 using FiqueBellaFinal.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
-using System.Threading;
 using Npgsql;
+using System.Threading;
 
 var builder = WebApplication.CreateBuilder(args);
 
 Console.WriteLine("Iniciando configuração do builder...");
 
-// 🔴 Porta obrigatória no Railway
+// 🔴 Obrigatório no Railway
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://*:{port}");
 
-// 🔹 Conexão PostgreSQL via DATABASE_URL
+// 🔹 Obter connection string do Railway
 string connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-// 🔹 Converte URL do Railway para NpgsqlConnectionStringBuilder se necessário
+// 🔹 Converter DATABASE_URL do formato postgresql:// para Npgsql
 if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgresql://"))
 {
-    var uri = new Uri(connectionString);
-    var userInfo = uri.UserInfo.Split(':');
+    // remover "postgresql://"
+    connectionString = connectionString.Replace("postgresql://", "");
+    
+    var userPassAndHost = connectionString.Split('@');
+    var userPass = userPassAndHost[0].Split(':');
+    var hostAndDb = userPassAndHost[1].Split('/');
+    var hostPort = hostAndDb[0].Split(':');
 
-    var npgsqlBuilder = new NpgsqlConnectionStringBuilder
+    var builderNpgsql = new NpgsqlConnectionStringBuilder
     {
-        Host = uri.Host,
-        Port = uri.Port,
-        Username = userInfo[0],
-        Password = userInfo[1],
-        Database = uri.AbsolutePath.TrimStart('/'),
+        Host = hostPort[0],
+        Port = int.Parse(hostPort[1]),
+        Username = userPass[0],
+        Password = userPass[1],
+        Database = hostAndDb[1],
         SslMode = SslMode.Prefer,
         TrustServerCertificate = true,
         Timeout = 120
     };
 
-    connectionString = npgsqlBuilder.ConnectionString;
+    connectionString = builderNpgsql.ConnectionString;
 }
 
-// 🔹 Fallback caso DATABASE_URL não esteja definida
+// 🔹 Fallback caso DATABASE_URL não esteja definida (local)
 if (string.IsNullOrEmpty(connectionString))
 {
-    connectionString = new NpgsqlConnectionStringBuilder
-    {
-        Host = Environment.GetEnvironmentVariable("PGHOST") ?? "postgres.railway.internal",
-        Port = int.Parse(Environment.GetEnvironmentVariable("PGPORT") ?? "5432"),
-        Username = Environment.GetEnvironmentVariable("PGUSER") ?? "postgres",
-        Password = Environment.GetEnvironmentVariable("PGPASSWORD") ?? "FiqueBella2025",
-        Database = Environment.GetEnvironmentVariable("PGDATABASE") ?? "railway",
-        SslMode = SslMode.Prefer,
-        TrustServerCertificate = true,
-        Timeout = 120
-    }.ConnectionString;
+    connectionString = "Host=postgres.railway.internal;Port=5432;Database=railway;Username=postgres;Password=FiqueBella2025;SSL Mode=Prefer;Trust Server Certificate=true;";
 }
 
-// 🔹 Adiciona DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
@@ -83,12 +77,12 @@ var app = builder.Build();
 
 Console.WriteLine("Iniciando teste de conexão com o banco...");
 
-// 🔹 Retry de conexão
+// 🔹 Retry de conexão com tempo maior
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     int retries = 5;
-    int delay = 15000;
+    int delay = 15000; // 15 segundos
 
     for (int i = 0; i < retries; i++)
     {
@@ -110,7 +104,11 @@ using (var scope = app.Services.CreateScope())
         catch (Exception ex)
         {
             Console.WriteLine($"Erro ao conectar ou migrar banco: {ex.Message}");
-            if (i == retries - 1) throw;
+            if (i == retries - 1)
+            {
+                Console.WriteLine("Excedidas todas as tentativas. Continuando sem migrations.");
+                throw;
+            }
             Thread.Sleep(delay);
         }
     }
