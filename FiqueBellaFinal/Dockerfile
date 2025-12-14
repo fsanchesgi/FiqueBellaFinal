@@ -2,16 +2,16 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 
-# Copiar csproj e restaurar dependências primeiro (cache mais eficiente)
+# Copiar csproj e restaurar dependências primeiro
 COPY FiqueBellaFinal/*.csproj ./FiqueBellaFinal/
 WORKDIR /app/FiqueBellaFinal
 RUN dotnet restore
 
-# Copiar todo o código
+# Copiar todo o código (incluindo Areas/Services)
 COPY FiqueBellaFinal/. ./FiqueBellaFinal
 
 # Build e publish
-RUN dotnet publish -c Release -o /app/out
+RUN dotnet publish -c Release -o /app/out /p:UseAppHost=false
 
 # Etapa de runtime
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
