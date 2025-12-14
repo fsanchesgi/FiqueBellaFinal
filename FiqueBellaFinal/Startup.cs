@@ -1,3 +1,4 @@
+using FiqueBellaFinal.Data; // <- mantido apenas uma vez
 using FiqueBellaFinal.Areas.Admin.Services;
 using FiqueBellaFinal.Controllers;
 using FiqueBellaFinal.Models;
@@ -7,9 +8,6 @@ using FiqueBellaFinal.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using ReflectionIT.Mvc.Paging;
 using System.Diagnostics; // Se usar Activity
-using FiqueBellaFinal.Data;
-
-
 
 public class Startup
 {
