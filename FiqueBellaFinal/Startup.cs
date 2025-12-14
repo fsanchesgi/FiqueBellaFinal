@@ -9,9 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using ReflectionIT.Mvc.Paging;
 using System;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace FiqueBellaFinal
 {
@@ -51,7 +52,7 @@ namespace FiqueBellaFinal
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (!env.IsDevelopment())
             {
@@ -65,55 +66,48 @@ namespace FiqueBellaFinal
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // 🔹 Teste de conexão com retry e migrations
+            // 🔹 Teste de conexão com retry exponencial e migrations
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 int retries = 5;
-                int delay = 10000; // 10 segundos
+                int delay = 5000; // 5 segundos inicial
 
-                for (int i = 0; i < retries; i++)
+                Task.Run(async () =>
                 {
-                    try
+                    for (int i = 0; i < retries; i++)
                     {
-                        Console.WriteLine($"Tentativa {i + 1}/{retries} para conectar ao banco...");
+                        try
+                        {
+                            logger.LogInformation($"Tentativa {i + 1}/{retries} para conectar ao banco...");
+                            if (await db.Database.CanConnectAsync())
+                            {
+                                logger.LogInformation("Conexão com banco OK. Aplicando migrations...");
+                                await db.Database.MigrateAsync();
+                                logger.LogInformation("Migrations aplicadas com sucesso.");
+                                break;
+                            }
+                            else
+                            {
+                                logger.LogWarning("Banco indisponível no momento.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.LogError(ex, $"Erro ao conectar ou migrar banco (tentativa {i + 1}/{retries}).");
+                            if (i == retries - 1)
+                            {
+                                logger.LogError("Excedidas todas as tentativas. Continuando sem migrations.");
+                            }
+                        }
 
-                        if (db.Database.CanConnect())
-                        {
-                            Console.WriteLine("Conexão com banco OK. Aplicando migrations...");
-                            db.Database.Migrate();
-                            Console.WriteLine("Migrations aplicadas.");
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Banco indisponível no momento.");
-                        }
+                        await Task.Delay(delay);
+                        delay *= 2; // exponencial backoff
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Erro ao conectar ou migrar banco (tentativa {i + 1}/{retries}): {ex.Message}");
-                        if (i == retries - 1)
-                        {
-                            Console.WriteLine("Excedidas todas as tentativas. Continuando sem migrations.");
-                            throw;
-                        }
-                        Thread.Sleep(delay);
-                    }
-                }
+                }).GetAwaiter().GetResult(); // bloqueia até terminar as tentativas
             }
 
             // 🔹 Rotas
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "areas",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
-        }
-    }
-}
