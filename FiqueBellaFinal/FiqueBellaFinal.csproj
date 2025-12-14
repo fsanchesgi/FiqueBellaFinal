@@ -8,20 +8,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Models, Data, Controllers, Areas, Services -->
+    <!-- Inclui todos os arquivos da aplicação -->
     <Compile Include="Models\**\*.cs" />
     <Compile Include="Data\**\*.cs" />
     <Compile Include="Areas\**\*.cs" />
+    <Compile Include="Controllers\**\*.cs" />
+    <Compile Include="ViewModels\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Entity Framework Core -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+
+    <!-- Razor Runtime Compilation -->
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.0" />
+
+    <!-- Paging -->
+    <PackageReference Include="ReflectionIT.Mvc.Paging" Version="3.0.0" />
   </ItemGroup>
 
 </Project>
