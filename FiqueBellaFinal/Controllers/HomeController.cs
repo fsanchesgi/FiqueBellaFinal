@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;                    // Para Controller e IActionR
 using FiqueBellaFinal.Data;                         // Se usar AppDbContext (se houver)
 using FiqueBellaFinal.Models;                       // Para modelos
 using FiqueBellaFinal.Repositories.Interfaces;     // Para repositórios
+using System.Diagnostics;
 
 
 
