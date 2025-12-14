@@ -1,4 +1,4 @@
-using FiqueBellaFinal.Data;
+using FiqueBellaFinal.Data; // <- mantido apenas uma vez
 using FiqueBellaFinal.Areas.Admin.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -6,9 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ReflectionIT.Mvc.Paging;
 using System.Diagnostics; // Se usar Activity
-using FiqueBellaFinal.Data;
-
-
 
 var builder = WebApplication.CreateBuilder(args);
 
