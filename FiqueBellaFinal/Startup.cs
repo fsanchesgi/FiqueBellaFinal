@@ -11,7 +11,7 @@ using FiqueBellaFinal.Context;
 
 
 
-ppublic class Startup
+public class Startup
 {
     public IConfiguration Configuration { get; }
 
