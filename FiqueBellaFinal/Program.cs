@@ -41,29 +41,40 @@ var app = builder.Build();
 
 Console.WriteLine("Builder finalizado. Iniciando teste de conexão com o banco...");
 
-// 🔹 TESTE DE CONEXÃO (SEM DERRUBAR A APP)
+// 🔹 TESTE DE CONEXÃO COM RETRY (SEM DERRUBAR A APP)
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate(); // aplica migrations se o banco estiver pronto
-    try
-    {
-        Console.WriteLine("Tentando conectar ao banco...");
 
-        if (db.Database.CanConnect())
-        {
-            Console.WriteLine("Conexão com banco OK. Aplicando migrations...");
-            db.Database.Migrate();
-            Console.WriteLine("Migrations aplicadas.");
-        }
-        else
-        {
-            Console.WriteLine("Banco indisponível no momento. Aplicação continuará sem migrations.");
-        }
-    }
-    catch (Exception ex)
+    int retries = 5;
+    for (int i = 0; i < retries; i++)
     {
-        Console.WriteLine("Erro ao conectar ou migrar banco: " + ex.Message);
+        try
+        {
+            Console.WriteLine("Tentando conectar ao banco...");
+
+            if (db.Database.CanConnect())
+            {
+                Console.WriteLine("Conexão com banco OK. Aplicando migrations...");
+                db.Database.Migrate();
+                Console.WriteLine("Migrations aplicadas.");
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Banco indisponível no momento.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao conectar ou migrar banco (tentativa {i + 1}/{retries}): " + ex.Message);
+            if (i == retries - 1)
+            {
+                Console.WriteLine("Excedidas as tentativas de conexão. A aplicação continuará sem migrations.");
+                throw; // Caso todas as tentativas falhem, levanta o erro
+            }
+            Thread.Sleep(5000); // Aguardar 5 segundos antes de tentar novamente
+        }
     }
 }
 
