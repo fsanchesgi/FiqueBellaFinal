@@ -7,6 +7,7 @@ using FiqueBellaFinal.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using ReflectionIT.Mvc.Paging;
 using System.Diagnostics; // Se usar Activity
+using FiqueBellaFinal.Context;
 
 
 
