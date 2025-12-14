@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using FiqueBellaFinal.ViewModels;
 using FiqueBellaFinal.Repositories.Interfaces;
 using System.Diagnostics;
+using FiqueBellaFinal.Models; // <--- garante que ErrorViewModel seja reconhecido
 
 namespace FiqueBellaFinal.Controllers
 {
