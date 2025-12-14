@@ -4,6 +4,7 @@ using FiqueBellaFinal.Data;                      // AppDbContext
 using FiqueBellaFinal.Models;                    // Se usar Models
 using FiqueBellaFinal.Areas.Admin.Services;
 using Microsoft.Extensions.Options;             // IOptions<>
+using Microsoft.EntityFrameworkCore;
 
 
 namespace FiqueBellaFinal.Areas.Admin.Controllers
