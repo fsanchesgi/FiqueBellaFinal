@@ -16,7 +16,7 @@ builder.WebHost.UseUrls($"http://*:{port}");
 
 // 🔹 DbContext PostgreSQL gerenciado do Railway com timeout aumentado
 var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
-                       ?? "Host=postgres.railway.internal;Port=5432;Database=railway;Username=postgres;Password=FiqueBella@2025;Timeout=120;";
+                       ?? "Host=postgres.railway.internal;Port=5432;Database=railway;Username=postgres;Password=FiqueBella2025;SSL Mode=Prefer;Trust Server Certificate=true;";
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
