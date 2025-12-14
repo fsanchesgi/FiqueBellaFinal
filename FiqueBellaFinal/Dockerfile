@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 
-# Copiar csproj e restaurar dependências primeiro
+# Copiar csproj e restaurar dependências
 COPY FiqueBellaFinal/*.csproj ./FiqueBellaFinal/
 WORKDIR /app/FiqueBellaFinal
 RUN dotnet restore
