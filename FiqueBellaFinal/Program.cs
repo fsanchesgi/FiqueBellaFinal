@@ -4,6 +4,7 @@ using FiqueBellaFinal.Repositories;
 using FiqueBellaFinal.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
+using System.Threading;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,10 @@ Console.WriteLine("Iniciando configuração do builder...");
 // 🔴 OBRIGATÓRIO NO RAILWAY
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://*:{port}");
+
+// 🔹 FORÇAR TLS 1.2 (importante para Railway)
+System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+AppContext.SetSwitch("System.Net.Sockets.EnableMultipleTcpConnections", true);
 
 // DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
