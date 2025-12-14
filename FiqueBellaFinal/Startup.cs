@@ -26,9 +26,9 @@ namespace FiqueBellaFinal
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // 🔹 DbContext SQL Server
+            // 🔹 DbContext PostgreSQL
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             // 🔹 Repositórios
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
