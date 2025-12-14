@@ -11,43 +11,26 @@ var builder = WebApplication.CreateBuilder(args);
 
 Console.WriteLine("Iniciando configuração do builder...");
 
-// 🔴 Obrigatório no Railway
+// 🔴 Porta obrigatória no Railway
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://*:{port}");
 
-// 🔹 Configurando DbContext PostgreSQL com DATABASE_URL do Railway
+// 🔹 Conexão PostgreSQL via DATABASE_URL
 string connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-// Se a connection string vier no formato URL do Railway, converte manualmente
+// 🔹 Converte URL do Railway para NpgsqlConnectionStringBuilder se necessário
 if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgresql://"))
 {
-    // Remove prefixo
-    var cleanUrl = connectionString.Replace("postgresql://", "");
-
-    // Divide user:pass e host:port/db
-    var atIndex = cleanUrl.IndexOf('@');
-    var userPass = cleanUrl.Substring(0, atIndex);
-    var hostDb = cleanUrl.Substring(atIndex + 1);
-
-    var colonIndex = userPass.IndexOf(':');
-    var username = userPass.Substring(0, colonIndex);
-    var password = userPass.Substring(colonIndex + 1);
-
-    var slashIndex = hostDb.IndexOf('/');
-    var hostPort = hostDb.Substring(0, slashIndex);
-    var database = hostDb.Substring(slashIndex + 1);
-
-    var colonHost = hostPort.IndexOf(':');
-    var host = hostPort.Substring(0, colonHost);
-    var portDb = int.Parse(hostPort.Substring(colonHost + 1));
+    var uri = new Uri(connectionString);
+    var userInfo = uri.UserInfo.Split(':');
 
     var npgsqlBuilder = new NpgsqlConnectionStringBuilder
     {
-        Host = host,
-        Port = portDb,
-        Username = username,
-        Password = password,
-        Database = database,
+        Host = uri.Host,
+        Port = uri.Port,
+        Username = userInfo[0],
+        Password = userInfo[1],
+        Database = uri.AbsolutePath.TrimStart('/'),
         SslMode = SslMode.Prefer,
         TrustServerCertificate = true,
         Timeout = 120
@@ -56,12 +39,23 @@ if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("post
     connectionString = npgsqlBuilder.ConnectionString;
 }
 
-// Fallback caso DATABASE_URL não esteja definida
+// 🔹 Fallback caso DATABASE_URL não esteja definida
 if (string.IsNullOrEmpty(connectionString))
 {
-    connectionString = "Host=postgres.railway.internal;Port=5432;Database=railway;Username=postgres;Password=FiqueBella2025;SSL Mode=Prefer;Trust Server Certificate=true;";
+    connectionString = new NpgsqlConnectionStringBuilder
+    {
+        Host = Environment.GetEnvironmentVariable("PGHOST") ?? "postgres.railway.internal",
+        Port = int.Parse(Environment.GetEnvironmentVariable("PGPORT") ?? "5432"),
+        Username = Environment.GetEnvironmentVariable("PGUSER") ?? "postgres",
+        Password = Environment.GetEnvironmentVariable("PGPASSWORD") ?? "FiqueBella2025",
+        Database = Environment.GetEnvironmentVariable("PGDATABASE") ?? "railway",
+        SslMode = SslMode.Prefer,
+        TrustServerCertificate = true,
+        Timeout = 120
+    }.ConnectionString;
 }
 
+// 🔹 Adiciona DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
@@ -89,12 +83,12 @@ var app = builder.Build();
 
 Console.WriteLine("Iniciando teste de conexão com o banco...");
 
-// 🔹 Retry de conexão com tempo maior
+// 🔹 Retry de conexão
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     int retries = 5;
-    int delay = 15000; // 15 segundos de espera entre tentativas
+    int delay = 15000;
 
     for (int i = 0; i < retries; i++)
     {
@@ -116,12 +110,8 @@ using (var scope = app.Services.CreateScope())
         catch (Exception ex)
         {
             Console.WriteLine($"Erro ao conectar ou migrar banco: {ex.Message}");
-            if (i == retries - 1)
-            {
-                Console.WriteLine("Excedidas todas as tentativas. Continuando sem migrations.");
-                throw;
-            }
-            Thread.Sleep(delay); // Aguardar mais tempo antes da próxima tentativa
+            if (i == retries - 1) throw;
+            Thread.Sleep(delay);
         }
     }
 }
