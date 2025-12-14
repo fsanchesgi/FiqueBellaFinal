@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using ReflectionIT.Mvc.Paging;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
