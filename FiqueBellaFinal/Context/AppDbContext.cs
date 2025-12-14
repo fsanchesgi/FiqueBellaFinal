@@ -10,9 +10,6 @@ namespace FiqueBellaFinal.Data
         {
         }
 
-        // =========================
-        // Tabelas reais
-        // =========================
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
@@ -23,59 +20,7 @@ namespace FiqueBellaFinal.Data
         public DbSet<Tipo> Tipos { get; set; }
         public DbSet<EntradaSaida> EntradasSaidas { get; set; }
 
-        // =========================
-        // Queries / Views (SEM TABELA)
-        // =========================
+        // Keyless / Query
         public DbSet<ProcedimentoGrafico> ProcedimentoGraficos { get; set; }
 
-        // =========================
-        // Models auxiliares (NÃO são tabelas)
-        // =========================
-        public DbSet<FileManagerModel> FileManagerModels { get; set; }
-        public DbSet<ConfigurationImagens> ConfigurationImagens { get; set; }
-
-        // =========================
-        // Configuração EF Core
-        // =========================
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // -------------------------
-            // FileManagerModel (NÃO tabela)
-            // -------------------------
-            modelBuilder.Entity<FileManagerModel>()
-                .HasNoKey()
-                .ToView(null);
-
-            modelBuilder.Entity<FileManagerModel>()
-                .Ignore(x => x.IFormFile)
-                .Ignore(x => x.IFormFiles)
-                .Ignore(x => x.Files);
-
-            // -------------------------
-            // ConfigurationImagens (NÃO tabela)
-            // -------------------------
-            modelBuilder.Entity<ConfigurationImagens>()
-                .HasNoKey()
-                .ToView(null);
-
-            // -------------------------
-            // ProcedimentoGrafico (Query / View)
-            // -------------------------
-            modelBuilder.Entity<ProcedimentoGrafico>()
-                .HasNoKey();
-
-            modelBuilder.Entity<ProcedimentoGrafico>()
-                .Property(p => p.ProcedimentoValorTotal)
-                .HasPrecision(18, 2);
-
-            // -------------------------
-            // Precisão para valores monetários
-            // -------------------------
-            modelBuilder.Entity<Produto>()
-                .Property(p => p.Preco)
-                .HasPrecision(18, 2);
-
-            base.OnModelCreating(modelBuilder);
-        }
-    }
-}
+        // NÃO s
