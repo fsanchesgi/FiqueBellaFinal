@@ -1,5 +1,6 @@
 using FiqueBellaFinal.Models;
 using System.Collections.Generic;
+using System.IO;
 
 namespace FiqueBellaFinal.ViewModels
 {
