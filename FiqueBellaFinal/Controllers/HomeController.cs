@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Mvc;                    // Para Controller e IActionResult
 using FiqueBellaFinal.Data;                         // Se usar AppDbContext (se houver)
 using FiqueBellaFinal.Models;                       // Para modelos
+using FiqueBellaFinal.ViewModels;
 using FiqueBellaFinal.Repositories.Interfaces;     // Para repositórios
 using FiqueBellaFinal.Areas.Admin.Services;
 using ReflectionIT.Mvc.Paging;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 
 namespace FiqueBellaFinal.Controllers
