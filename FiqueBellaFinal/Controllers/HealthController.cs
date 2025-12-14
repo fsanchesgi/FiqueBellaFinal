@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FiqueBellaFinal.Controllers
 {
-    [Route("/")]
+    // 🔴 ANTES: [Route("/")]
+    // ✅ AGORA: endpoint exclusivo para health check
+    [Route("health")]
     public class HealthController : Controller
     {
         [HttpGet("")]
