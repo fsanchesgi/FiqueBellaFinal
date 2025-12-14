@@ -4,20 +4,22 @@ using FiqueBellaFinal.Repositories;
 using FiqueBellaFinal.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
-using System;
 using System.Threading;
 
 var builder = WebApplication.CreateBuilder(args);
 
 Console.WriteLine("Iniciando configuração do builder...");
 
-// 🔴 OBRIGATÓRIO NO RAILWAY
+// 🔴 Obrigatório no Railway
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://*:{port}");
 
-// 🔹 DbContext SQL Server
+// 🔹 DbContext SQL Server com timeout aumentado
+var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION") 
+                       ?? "Server=tramway.proxy.rlwy.net,26118;Database=FiqueBellaDB;User Id=sa;Password=FiqueBella@2025;TrustServerCertificate=True;Encrypt=True;Connect Timeout=120;"; // Timeout de 120 segundos
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString));
 
 Console.WriteLine("DbContext adicionado.");
 
@@ -31,11 +33,9 @@ builder.Services.AddScoped<ISugestaoRepository, SugestaoRepository>();
 builder.Services.AddScoped<RelatorioServices>();
 builder.Services.AddScoped<GraficoServices>();
 
-// 🔹 Controllers + Razor runtime
 builder.Services.AddControllersWithViews()
-    .AddRazorRuntimeCompilation();
+       .AddRazorRuntimeCompilation();
 
-// 🔹 Paging
 builder.Services.AddPaging(options =>
 {
     options.ViewName = "Bootstrap5";
@@ -43,23 +43,23 @@ builder.Services.AddPaging(options =>
 
 var app = builder.Build();
 
-Console.WriteLine("Builder finalizado. Iniciando teste de conexão com o banco...");
+Console.WriteLine("Iniciando teste de conexão com o banco...");
 
-// 🔹 TESTE DE CONEXÃO COM RETRY E MIGRATIONS
+// 🔹 Retry de conexão com tempo maior
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     int retries = 5;
+    int delay = 10000; // 10 segundos de espera entre tentativas
 
     for (int i = 0; i < retries; i++)
     {
         try
         {
-            Console.WriteLine("Tentando conectar ao banco...");
-
+            Console.WriteLine($"Tentativa {i + 1}/{retries}...");
             if (db.Database.CanConnect())
             {
-                Console.WriteLine("Conexão com banco OK. Aplicando migrations...");
+                Console.WriteLine("Conexão OK. Aplicando migrations...");
                 db.Database.Migrate();
                 Console.WriteLine("Migrations aplicadas.");
                 break;
@@ -71,13 +71,13 @@ using (var scope = app.Services.CreateScope())
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Erro ao conectar ou migrar banco (tentativa {i + 1}/{retries}): {ex.Message}");
+            Console.WriteLine($"Erro ao conectar ou migrar banco: {ex.Message}");
             if (i == retries - 1)
             {
-                Console.WriteLine("Excedidas as tentativas de conexão. A aplicação continuará sem migrations.");
-                throw; // Levanta erro caso todas as tentativas falhem
+                Console.WriteLine("Excedidas todas as tentativas. Continuando sem migrations.");
+                throw;
             }
-            Thread.Sleep(5000); // Espera 5 segundos antes da próxima tentativa
+            Thread.Sleep(delay); // Aguardar mais tempo antes da próxima tentativa
         }
     }
 }
@@ -92,7 +92,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
