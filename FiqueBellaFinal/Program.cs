@@ -18,9 +18,12 @@ builder.WebHost.UseUrls($"http://*:{port}");
 System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
 AppContext.SetSwitch("System.Net.Sockets.EnableMultipleTcpConnections", true);
 
-// DbContext
+// 🔹 DbContext atualizado para PostgreSQL
+var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION") 
+                       ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 Console.WriteLine("DbContext adicionado.");
 
@@ -76,7 +79,7 @@ using (var scope = app.Services.CreateScope())
             if (i == retries - 1)
             {
                 Console.WriteLine("Excedidas as tentativas de conexão. A aplicação continuará sem migrations.");
-                throw; // Caso todas as tentativas falhem, levanta o erro
+                throw;
             }
             Thread.Sleep(5000); // Aguardar 5 segundos antes de tentar novamente
         }
