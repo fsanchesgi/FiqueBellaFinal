@@ -18,12 +18,12 @@ builder.WebHost.UseUrls($"http://*:{port}");
 System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
 AppContext.SetSwitch("System.Net.Sockets.EnableMultipleTcpConnections", true);
 
-// 🔹 DbContext atualizado para PostgreSQL
+// 🔹 DbContext atualizado para SQL Server
 var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION") 
                        ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseSqlServer(connectionString)); // ALTERADO de UseNpgsql para UseSqlServer
 
 Console.WriteLine("DbContext adicionado.");
 
