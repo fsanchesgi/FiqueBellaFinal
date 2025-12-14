@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;                 // IActionResult, Controller
 using Microsoft.AspNetCore.Authorization;       // [Authorize]
 using FiqueBellaFinal.Data;                      // AppDbContext
 using FiqueBellaFinal.Models;                    // Se usar Models
-using FiqueBellaFinal.Services;                  // GraficoServices, RelatorioServices, etc
+using FiqueBellaFinal.Areas.Services;
 using Microsoft.Extensions.Options;             // IOptions<>
 
 namespace FiqueBellaFinal.Areas.Admin.Controllers
