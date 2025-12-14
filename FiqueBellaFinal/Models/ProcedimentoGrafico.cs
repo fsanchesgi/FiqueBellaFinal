@@ -3,15 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FiqueBellaFinal.Models
 {
-    [Keyless] // ← ESSENCIAL
+    [Keyless]
     public class ProcedimentoGrafico
     {
-        // mantenha TODAS as propriedades que já existem
-        // não remova nada
-
-        // exemplo:
-        public string Nome { get; set; }
-        public int Quantidade { get; set; }
-        public decimal Valor { get; set; }
+        public string ProcedimentoNome { get; set; }
+        public int ProcedimentoQuantidade { get; set; }
+        public decimal ProcedimentoValorTotal { get; set; }
     }
 }
