@@ -26,7 +26,7 @@ namespace FiqueBellaFinal
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // 🔹 DbContext PostgreSQL
+            // 🔹 DbContext PostgreSQL (usando endpoint privado)
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -65,12 +65,12 @@ namespace FiqueBellaFinal
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // 🔹 Teste de conexão com retry e migrations (síncrono)
+            // 🔹 Teste de conexão com retry exponencial e migrations
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 int retries = 5;
-                int delay = 5000; // 5 segundos
+                int delay = 5000; // 5 segundos inicial
 
                 for (int i = 0; i < retries; i++)
                 {
