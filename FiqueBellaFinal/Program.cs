@@ -26,6 +26,32 @@ builder.Services.AddPaging(options =>
 
 var app = builder.Build();
 
+// --- TESTE DE CONEXÃO COM O BANCO ---
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    try
+    {
+        if (!db.Database.CanConnect())
+        {
+            Console.WriteLine("Não foi possível conectar ao banco de dados.");
+        }
+        else
+        {
+            Console.WriteLine("Conexão com o banco de dados OK!");
+        }
+
+        // Aplica migrations automaticamente (se houver)
+        db.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Erro de conexão ou migração: " + ex.Message);
+        throw; // mantém a exceção para aparecer no log do Railway
+    }
+}
+// --- FIM DO TESTE ---
+
 // Pipeline HTTP
 if (!app.Environment.IsDevelopment())
 {
@@ -40,12 +66,4 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "areas",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.Run();
+ap
