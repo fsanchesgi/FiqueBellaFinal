@@ -11,50 +11,27 @@ using System.Diagnostics; // Se usar Activity
 
 var builder = WebApplication.CreateBuilder(args);
 
-// -------------------------
-// Configuração de DB
-// -------------------------
-builder.Services.AddDbContext<AppDbContext>(options =>
+// Adiciona o DbContext
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// -------------------------
-// Configuração de Services
-// -------------------------
+// Adiciona serviços customizados
 builder.Services.AddScoped<RelatorioServices>();
 builder.Services.AddScoped<GraficoServices>();
 
-// -------------------------
-// Configuração de IOptions
-// -------------------------
-builder.Services.Configure<MySettings>(builder.Configuration.GetSection("MySettings"));
+// Adiciona controllers com views e runtime compilation
+builder.Services.AddControllersWithViews()
+    .AddRazorRuntimeCompilation();
 
-// -------------------------
-// Autenticação / Authorization
-// -------------------------
-builder.Services.AddControllersWithViews(options =>
+// Adiciona ReflectionIT.Mvc.Paging atualizado
+builder.Services.AddPaging(options =>
 {
-    var policy = new AuthorizationPolicyBuilder()
-                     .RequireAuthenticatedUser()
-                     .Build();
-    options.Filters.Add(new AuthorizeFilter(policy)); // Aplica Authorize globalmente se quiser
+    options.ViewName = "Bootstrap5"; // novo padrão de uso
 });
 
-// Se for usar cookies (opcional, mas padrão para MVC)
-builder.Services.AddAuthentication("CookieAuth")
-    .AddCookie("CookieAuth", options =>
-    {
-        options.LoginPath = "/Account/Login";
-        options.AccessDeniedPath = "/Account/AccessDenied";
-    });
-
-// -------------------------
-// Build App
-// -------------------------
 var app = builder.Build();
 
-// -------------------------
 // Pipeline HTTP
-// -------------------------
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -66,12 +43,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); // obrigatória se usar [Authorize]
+app.UseAuthentication();
 app.UseAuthorization();
 
-// -------------------------
-// Rotas MVC com Areas
-// -------------------------
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
@@ -81,11 +55,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
-// -------------------------
-// Classe de exemplo para IOptions
-// -------------------------
-public class MySettings
-{
-    public string ExampleSetting { get; set; }
-}
