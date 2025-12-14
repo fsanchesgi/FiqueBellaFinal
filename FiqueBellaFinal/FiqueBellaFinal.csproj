@@ -11,8 +11,7 @@
     <!-- Models, Data, Controllers, Areas, Services -->
     <Compile Include="Models\**\*.cs" />
     <Compile Include="Data\**\*.cs" />
-    <Compile Include="Areas\Controllers\**\*.cs" />
-    <Compile Include="Areas\Services\**\*.cs" />
+    <Compile Include="Areas\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>
