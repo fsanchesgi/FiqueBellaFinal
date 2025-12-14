@@ -6,9 +6,12 @@ using System.Diagnostics; // se usar Activity
 
 var builder = WebApplication.CreateBuilder(args);
 
+Console.WriteLine("Iniciando configuração do builder...");
+
 // Adiciona o DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+Console.WriteLine("DbContext adicionado.");
 
 // Serviços customizados
 builder.Services.AddScoped<RelatorioServices>();
@@ -25,6 +28,7 @@ builder.Services.AddPaging(options =>
 });
 
 var app = builder.Build();
+Console.WriteLine("Builder finalizado. Iniciando teste de conexão com o banco...");
 
 // --- TESTE DE CONEXÃO COM O BANCO ---
 using (var scope = app.Services.CreateScope())
@@ -32,6 +36,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     try
     {
+        Console.WriteLine("Tentando conectar ao banco...");
         if (!db.Database.CanConnect())
         {
             Console.WriteLine("Não foi possível conectar ao banco de dados.");
@@ -41,8 +46,9 @@ using (var scope = app.Services.CreateScope())
             Console.WriteLine("Conexão com o banco de dados OK!");
         }
 
-        // Aplica migrations automaticamente (se houver)
+        Console.WriteLine("Aplicando migrations...");
         db.Database.Migrate();
+        Console.WriteLine("Migrations aplicadas com sucesso!");
     }
     catch (Exception ex)
     {
@@ -52,7 +58,8 @@ using (var scope = app.Services.CreateScope())
 }
 // --- FIM DO TESTE ---
 
-// Pipeline HTTP
+Console.WriteLine("Pipeline HTTP iniciando...");
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -66,4 +73,13 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-ap
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+Console.WriteLine("Aplicação pronta. Rodando...");
+app.Run();
