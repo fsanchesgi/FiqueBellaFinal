@@ -6,6 +6,8 @@ using FiqueBellaFinal.Repositories.Interfaces;
 using FiqueBellaFinal.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using ReflectionIT.Mvc.Paging;
+using System.Diagnostics; // Se usar Activity
+
 
 
 namespace FiqueBellaFinal
