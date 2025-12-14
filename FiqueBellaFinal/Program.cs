@@ -16,15 +16,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Adiciona serviços customizados
+// Serviços customizados
 builder.Services.AddScoped<RelatorioServices>();
 builder.Services.AddScoped<GraficoServices>();
 
-// Adiciona controllers com views e runtime compilation
+// Controllers com views e runtime compilation
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation();
 
-// Adiciona ReflectionIT.Mvc.Paging atualizado
+// ReflectionIT.Mvc.Paging atualizado
 builder.Services.AddPaging(options =>
 {
     options.ViewName = "Bootstrap5";
