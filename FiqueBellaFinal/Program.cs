@@ -14,12 +14,12 @@ Console.WriteLine("Iniciando configuração do builder...");
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://*:{port}");
 
-// 🔹 DbContext SQL Server gerenciado do Railway com timeout aumentado
-var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION") 
-                       ?? "Server=tramway.proxy.rlwy.net,32176;Database=FiqueBellaDB;User Id=sa;Password=FiqueBella@2025;TrustServerCertificate=True;Encrypt=True;Connect Timeout=120;";
+// 🔹 DbContext PostgreSQL gerenciado do Railway com timeout aumentado
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
+                       ?? "Host=postgres.railway.internal;Port=5432;Database=railway;Username=postgres;Password=FiqueBella@2025;Timeout=120;";
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseNpgsql(connectionString));
 
 Console.WriteLine("DbContext adicionado.");
 
