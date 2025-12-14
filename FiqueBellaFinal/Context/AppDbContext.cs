@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using FiqueBellaFinal.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FiqueBellaFinal.Data
 {
@@ -10,45 +10,23 @@ namespace FiqueBellaFinal.Data
         {
         }
 
-        public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Produto> Produtos { get; set; }
+        // 🔹 DbSets das tabelas
         public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<Procedimento> Procedimentos { get; set; }
-        public DbSet<Sugestao> Sugestaos { get; set; }
-        public DbSet<Agenda> Agendas { get; set; }
         public DbSet<Contabilidade> Contabilidades { get; set; }
-        public DbSet<Tipo> Tipos { get; set; }
+        public DbSet<Procedimento> Procedimentos { get; set; }
+        public DbSet<Sugestao> Sugestoes { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Agenda> Agendas { get; set; }
         public DbSet<EntradaSaida> EntradasSaidas { get; set; }
-
-        // View / Relatório
-        public DbSet<ProcedimentoGrafico> ProcedimentoGraficos { get; set; }
-
-        // NÃO são tabelas
-        public DbSet<FileManagerModel> FileManagerModels { get; set; }
-        public DbSet<ConfigurationImagens> ConfigurationImagens { get; set; }
+        public DbSet<Tipo> Tipos { get; set; }
+        public DbSet<ProcedimentoGrafico> ProcedimentosGraficos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // ProcedimentoGrafico
-            modelBuilder.Entity<ProcedimentoGrafico>()
-                .HasNoKey();
-
-            // FileManagerModel
-            modelBuilder.Entity<FileManagerModel>()
-                .HasNoKey()
-                .ToView(null);
-
-            modelBuilder.Entity<FileManagerModel>()
-                .Ignore(x => x.IFormFile)
-                .Ignore(x => x.IFormFiles)
-                .Ignore(x => x.Files);
-
-            // ConfigurationImagens
-            modelBuilder.Entity<ConfigurationImagens>()
-                .HasNoKey()
-                .ToView(null);
-
             base.OnModelCreating(modelBuilder);
+
+            // Configurações adicionais se necessário
+            // Exemplo: modelBuilder.Entity<Procedimento>().Property(p => p.Nome).IsRequired();
         }
     }
 }
