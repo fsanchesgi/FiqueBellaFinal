@@ -7,7 +7,10 @@ namespace FiqueBellaFinal.Models
     public class ProcedimentoGrafico
     {
         public string ProcedimentoNome { get; set; }
+
         public int ProcedimentoQuantidade { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal ProcedimentoValorTotal { get; set; }
     }
 }
