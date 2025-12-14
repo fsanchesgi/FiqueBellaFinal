@@ -4,7 +4,6 @@ using FiqueBellaFinal.Repositories;
 using FiqueBellaFinal.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
-using System.Threading;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,16 +13,9 @@ Console.WriteLine("Iniciando configuração do builder...");
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://*:{port}");
 
-// 🔹 FORÇAR TLS 1.2 (importante para Railway)
-System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-AppContext.SetSwitch("System.Net.Sockets.EnableMultipleTcpConnections", true);
-
-// 🔹 DbContext atualizado para SQL Server
-var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION") 
-                       ?? builder.Configuration.GetConnectionString("DefaultConnection");
-
+// DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString)); // ALTERADO de UseNpgsql para UseSqlServer
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 Console.WriteLine("DbContext adicionado.");
 
@@ -79,7 +71,7 @@ using (var scope = app.Services.CreateScope())
             if (i == retries - 1)
             {
                 Console.WriteLine("Excedidas as tentativas de conexão. A aplicação continuará sem migrations.");
-                throw;
+                throw; // Caso todas as tentativas falhem, levanta o erro
             }
             Thread.Sleep(5000); // Aguardar 5 segundos antes de tentar novamente
         }
