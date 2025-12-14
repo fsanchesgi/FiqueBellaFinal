@@ -45,6 +45,7 @@ namespace FiqueBellaFinal.Data
                 .ToView(null);
 
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ProcedimentoGrafico>().HasNoKey();
         }
     }
 }
