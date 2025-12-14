@@ -1,15 +1,70 @@
+using FiqueBellaFinal.Data; // <- mantido apenas uma vez
 using FiqueBellaFinal.Data;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using FiqueBellaFinal.Areas.Admin.Services;
+using FiqueBellaFinal.Controllers;
+using FiqueBellaFinal.Models;
+using FiqueBellaFinal.Repositories;
+using FiqueBellaFinal.Repositories.Interfaces;
+using FiqueBellaFinal.Services;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
+using System.Diagnostics; // Se usar Activity
+using System.Diagnostics; // se usar Activity
 
-var builder = WebApplication.CreateBuilder(args);
+public class Startup
+{
+    public IConfiguration Configuration { get; }
 
-// 🔹 Instanciar a classe Startup
-var startup = new FiqueBellaFinal.Startup(builder.Configuration);
-startup.ConfigureServices(builder.Services);
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
 
-var app = builder.Build();
+    public void ConfigureServices(IServiceCollection services)
+    {
+        // DbContext
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-startup.Configure(app, builder.Environment);
+        // Serviços
+        services.AddScoped<RelatorioServices>();
+        services.AddScoped<GraficoServices>();
 
-app.Run();
+        // Controllers com views
+        services.AddControllersWithViews()
+            .AddRazorRuntimeCompilation();
+
+        // Paging atualizado
+        services.AddPaging(options =>
+        {
+            options.ViewName = "Bootstrap5";
+        });
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (!env.IsDevelopment())
+        {
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
+        }
+
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+            endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+        });
+    }
+}
