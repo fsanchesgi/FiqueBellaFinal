@@ -14,7 +14,7 @@ Console.WriteLine("Iniciando configuração do builder...");
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://*:{port}");
 
-// 🔹 DbContext SQL Server com timeout aumentado
+// 🔹 DbContext SQL Server gerenciado do Railway com timeout aumentado
 var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION") 
                        ?? "Server=tramway.proxy.rlwy.net,32176;Database=FiqueBellaDB;User Id=sa;Password=FiqueBella@2025;TrustServerCertificate=True;Encrypt=True;Connect Timeout=120;";
 
@@ -50,7 +50,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     int retries = 5;
-    int delay = 10000; // 10 segundos de espera entre tentativas
+    int delay = 15000; // 15 segundos de espera entre tentativas
 
     for (int i = 0; i < retries; i++)
     {
