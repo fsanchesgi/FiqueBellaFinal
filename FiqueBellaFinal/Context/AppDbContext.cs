@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using FiqueBellaFinal.Models;
 
-namespace FiqueBellaFinal.Data
+namespace FiqueBellaFinal.Context
 {
     public class AppDbContext : DbContext
     {
@@ -20,7 +20,35 @@ namespace FiqueBellaFinal.Data
         public DbSet<Tipo> Tipos { get; set; }
         public DbSet<EntradaSaida> EntradasSaidas { get; set; }
 
-        // Keyless / Query
+        // Keyless / View / DTO
         public DbSet<ProcedimentoGrafico> ProcedimentoGraficos { get; set; }
 
-        // NÃO s
+        // NÃO são tabelas
+        public DbSet<FileManagerModel> FileManagerModels { get; set; }
+        public DbSet<ConfigurationImagens> ConfigurationImagens { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // ProcedimentoGrafico (view / relatório)
+            modelBuilder.Entity<ProcedimentoGrafico>()
+                .HasNoKey();
+
+            // FileManagerModel NÃO é tabela
+            modelBuilder.Entity<FileManagerModel>()
+                .HasNoKey()
+                .ToView(null);
+
+            modelBuilder.Entity<FileManagerModel>()
+                .Ignore(x => x.IFormFile)
+                .Ignore(x => x.IFormFiles)
+                .Ignore(x => x.Files);
+
+            // ConfigurationImagens NÃO é tabela
+            modelBuilder.Entity<ConfigurationImagens>()
+                .HasNoKey()
+                .ToView(null);
+
+            base.OnModelCreating(modelBuilder);
+        }
+    }
+}
