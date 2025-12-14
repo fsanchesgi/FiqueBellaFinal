@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ReflectionIT.Mvc.Paging;
+using System.Diagnostics; // Se usar Activity
+
 
 
 var builder = WebApplication.CreateBuilder(args);
