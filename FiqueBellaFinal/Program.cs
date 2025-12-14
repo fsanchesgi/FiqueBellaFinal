@@ -5,6 +5,7 @@ using FiqueBellaFinal.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
 using System.Threading;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +15,35 @@ Console.WriteLine("Iniciando configuração do builder...");
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://*:{port}");
 
-// 🔹 DbContext PostgreSQL gerenciado do Railway com timeout aumentado
-var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
-                       ?? "Host=postgres.railway.internal;Port=5432;Database=railway;Username=postgres;Password=FiqueBella2025;SSL Mode=Prefer;Trust Server Certificate=true;";
+// 🔹 Configurando DbContext PostgreSQL com DATABASE_URL do Railway
+string connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+// Se a connection string vier no formato URL do Railway, converte para Key=Value
+if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgresql://"))
+{
+    var uri = new Uri(connectionString);
+    var userInfo = uri.UserInfo.Split(':');
+
+    var builderNpgsql = new NpgsqlConnectionStringBuilder
+    {
+        Host = uri.Host,
+        Port = uri.Port,
+        Username = userInfo[0],
+        Password = userInfo[1],
+        Database = uri.AbsolutePath.TrimStart('/'),
+        SslMode = SslMode.Prefer,
+        TrustServerCertificate = true,
+        Timeout = 120
+    };
+
+    connectionString = builderNpgsql.ConnectionString;
+}
+
+// Fallback caso DATABASE_URL não esteja definida
+if (string.IsNullOrEmpty(connectionString))
+{
+    connectionString = "Host=postgres.railway.internal;Port=5432;Database=railway;Username=postgres;Password=FiqueBella2025;SSL Mode=Prefer;Trust Server Certificate=true;";
+}
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
