@@ -22,17 +22,29 @@ namespace FiqueBellaFinal.Data
         public DbSet<ProcedimentoGrafico> ProcedimentoGraficos { get; set; }
         public DbSet<EntradaSaida> EntradasSaidas { get; set; }
 
-        // Mantidos
+        // ⚠️ MANTIDOS
         public DbSet<FileManagerModel> FileManagerModels { get; set; }
         public DbSet<ConfigurationImagens> ConfigurationImagens { get; set; }
 
+        // ✅ ADICIONE ISTO
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            // FileManagerModel NÃO é tabela
+            modelBuilder.Entity<FileManagerModel>()
+                .HasNoKey()
+                .ToView(null);
 
-            // ✅ ENTIDADES SEM TABELA / SEM CHAVE
-            modelBuilder.Entity<FileManagerModel>().HasNoKey();
-            modelBuilder.Entity<ConfigurationImagens>().HasNoKey();
+            modelBuilder.Entity<FileManagerModel>()
+                .Ignore(x => x.IFormFile)
+                .Ignore(x => x.IFormFiles)
+                .Ignore(x => x.Files);
+
+            // ConfigurationImagens NÃO é tabela
+            modelBuilder.Entity<ConfigurationImagens>()
+                .HasNoKey()
+                .ToView(null);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
