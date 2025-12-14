@@ -1,5 +1,7 @@
 using FiqueBellaFinal.Data;
 using FiqueBellaFinal.Areas.Admin.Services;
+using FiqueBellaFinal.Repositories;
+using FiqueBellaFinal.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
 
@@ -17,7 +19,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 Console.WriteLine("DbContext adicionado.");
 
-// Serviços
+// 🔹 REGISTRO DE TODOS OS REPOSITÓRIOS
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IContabilidadeRepository, ContabilidadeRepository>();
+builder.Services.AddScoped<IProcedimentoRepository, ProcedimentoRepository>();
+builder.Services.AddScoped<ISugestaoRepository, SugestaoRepository>();
+
+// 🔹 Serviços
 builder.Services.AddScoped<RelatorioServices>();
 builder.Services.AddScoped<GraficoServices>();
 
