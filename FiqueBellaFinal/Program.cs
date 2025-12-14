@@ -2,38 +2,28 @@ using FiqueBellaFinal.Data;
 using FiqueBellaFinal.Areas.Admin.Services;
 using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
-using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
 Console.WriteLine("Iniciando configuração do builder...");
 
-// Adiciona o DbContext
+// 🔴 OBRIGATÓRIO NO RAILWAY
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://*:{port}");
+
+// DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        sqlOptions =>
-        {
-            sqlOptions.EnableRetryOnFailure(
-                maxRetryCount: 5,
-                maxRetryDelay: TimeSpan.FromSeconds(10),
-                errorNumbersToAdd: null
-            );
-        }
-    )
-);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 Console.WriteLine("DbContext adicionado.");
 
-// Serviços customizados
+// Serviços
 builder.Services.AddScoped<RelatorioServices>();
 builder.Services.AddScoped<GraficoServices>();
 
-// Controllers com views e runtime compilation
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation();
 
-// ReflectionIT.Mvc.Paging
 builder.Services.AddPaging(options =>
 {
     options.ViewName = "Bootstrap5";
@@ -43,22 +33,20 @@ var app = builder.Build();
 
 Console.WriteLine("Builder finalizado. Iniciando teste de conexão com o banco...");
 
-// --- TESTE DE CONEXÃO COM O BANCO ---
+// 🔹 TESTE DE CONEXÃO (SEM DERRUBAR A APP)
 using (var scope = app.Services.CreateScope())
 {
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
     try
     {
-        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
         Console.WriteLine("Tentando conectar ao banco...");
 
         if (db.Database.CanConnect())
         {
-            Console.WriteLine("Conexão com o banco de dados OK!");
-
-            Console.WriteLine("Tentando aplicar migrations...");
+            Console.WriteLine("Conexão com banco OK. Aplicando migrations...");
             db.Database.Migrate();
-            Console.WriteLine("Migrations aplicadas com sucesso!");
+            Console.WriteLine("Migrations aplicadas.");
         }
         else
         {
@@ -67,12 +55,9 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        Console.WriteLine("Erro ao conectar ou aplicar migrations:");
-        Console.WriteLine(ex.Message);
-        Console.WriteLine("Aplicação continuará rodando mesmo sem banco.");
+        Console.WriteLine("Erro ao conectar ou migrar banco: " + ex.Message);
     }
 }
-// --- FIM DO TESTE ---
 
 Console.WriteLine("Pipeline HTTP iniciando...");
 
@@ -97,5 +82,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-Console.WriteLine("Aplicação pronta. Rodando...");
+Console.WriteLine($"Aplicação pronta. Rodando na porta {port}...");
 app.Run();
