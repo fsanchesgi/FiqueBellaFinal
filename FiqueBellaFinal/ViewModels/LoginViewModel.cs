@@ -7,12 +7,13 @@ namespace FiqueBellaFinal.ViewModels
     {
         [Required(ErrorMessage = "Informe o login")]
         [Display(Name = "Usuário")]
-        public string UserName { get; set; }
+        public string UserName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Informe a senha")]
         [Display(Name = "Senha")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
-        public string ReturnUrl { get; set; }
+        public string Password { get; set; } = string.Empty;
+
+        public string ReturnUrl { get; set; } = string.Empty;
     }
 }
