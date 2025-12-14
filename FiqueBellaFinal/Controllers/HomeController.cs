@@ -1,13 +1,7 @@
-using Microsoft.AspNetCore.Mvc;                    // Para Controller e IActionResult
-using FiqueBellaFinal.Data;                         // Se usar AppDbContext (se houver)
-using FiqueBellaFinal.Models;                       // Para modelos
+using Microsoft.AspNetCore.Mvc;
 using FiqueBellaFinal.ViewModels;
-using FiqueBellaFinal.Repositories.Interfaces;     // Para repositórios
-using FiqueBellaFinal.Areas.Admin.Services;
-using ReflectionIT.Mvc.Paging;
-using Microsoft.EntityFrameworkCore;
+using FiqueBellaFinal.Repositories.Interfaces;
 using System.Diagnostics;
-
 
 namespace FiqueBellaFinal.Controllers
 {
@@ -22,18 +16,35 @@ namespace FiqueBellaFinal.Controllers
 
         public IActionResult Index()
         {
-            var homeViewModel = new HomeViewModel
+            try
             {
-                ProcedimentosPreferidos = _procedimentoRepository.ProcedimentosPreferidos,
-                ProcedimentosEmPromocao = _procedimentoRepository.ProcedimentosEmPromocao
-            };
-            return View(homeViewModel);
+                var homeViewModel = new HomeViewModel
+                {
+                    ProcedimentosPreferidos = _procedimentoRepository.ProcedimentosPreferidos,
+                    ProcedimentosEmPromocao = _procedimentoRepository.ProcedimentosEmPromocao
+                };
+
+                return View(homeViewModel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro ao carregar HomeController: " + ex.Message);
+
+                return View(new HomeViewModel
+                {
+                    ProcedimentosPreferidos = Enumerable.Empty<Models.Procedimento>(),
+                    ProcedimentosEmPromocao = Enumerable.Empty<Models.Procedimento>()
+                });
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
 
         public IActionResult QuemSomos()
