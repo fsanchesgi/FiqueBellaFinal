@@ -7,7 +7,7 @@ COPY FiqueBellaFinal/*.csproj ./FiqueBellaFinal/
 WORKDIR /app/FiqueBellaFinal
 RUN dotnet restore
 
-# Copiar todo o código (incluindo Areas/Services)
+# Copiar todo o código
 COPY FiqueBellaFinal/. ./FiqueBellaFinal
 
 # Build e publish
