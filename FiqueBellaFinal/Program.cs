@@ -13,9 +13,15 @@ Console.WriteLine("Iniciando configuração do builder...");
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://*:{port}");
 
-// DbContext
+// 🔹 DbContext com ajuste para Railway (desabilitar TLS problemático e retry)
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") + ";Encrypt=False;";
+    options.UseSqlServer(connectionString, sqlOptions =>
+    {
+        sqlOptions.EnableRetryOnFailure(); // retry automático
+    });
+});
 
 Console.WriteLine("DbContext adicionado.");
 
