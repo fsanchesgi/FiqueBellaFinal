@@ -14,6 +14,24 @@ namespace FiqueBellaFinal.Repositories
             _context = context;
         }
 
+        public IEnumerable<Procedimento> Procedimentos
+        {
+            get
+            {
+                try
+                {
+                    return _context.Procedimentos
+                        .AsNoTracking()
+                        .ToList();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Erro ao buscar Procedimentos: " + ex.Message);
+                    return Enumerable.Empty<Procedimento>();
+                }
+            }
+        }
+
         public IEnumerable<Procedimento> ProcedimentosPreferidos
         {
             get
@@ -52,25 +70,8 @@ namespace FiqueBellaFinal.Repositories
             }
         }
 
-        public IEnumerable<Procedimento> Procedimentos
-        {
-            get
-            {
-                try
-                {
-                    return _context.Procedimentos
-                        .AsNoTracking()
-                        .ToList();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Erro ao buscar Procedimentos: " + ex.Message);
-                    return Enumerable.Empty<Procedimento>();
-                }
-            }
-        }
-
-        public Procedimento GetProcedimentoById(int procedimentoId)
+        // 🔴 NOME EXATAMENTE IGUAL AO DA INTERFACE
+        public Procedimento GetProcedimento(int procedimentoId)
         {
             try
             {
@@ -80,7 +81,7 @@ namespace FiqueBellaFinal.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Erro ao buscar Procedimento por ID: " + ex.Message);
+                Console.WriteLine("Erro ao buscar Procedimento: " + ex.Message);
                 return null;
             }
         }
