@@ -7,7 +7,7 @@ WORKDIR /src
 COPY *.sln ./
 COPY FiqueBellaFinal/*.csproj ./FiqueBellaFinal/
 
-# Restaura pacotes
+# Restaura pacotes NuGet
 RUN dotnet restore "FiqueBellaFinal/FiqueBellaFinal.csproj"
 
 # Copia todo o código
